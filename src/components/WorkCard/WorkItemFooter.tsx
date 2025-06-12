@@ -2,7 +2,7 @@ import ImportanceBox from '@components/WorkCard/ImportanceBox.tsx';
 import type { Importance } from '@/types/global';
 import { CalendarDaysIcon } from '@heroicons/react/24/outline';
 import dayjs from 'dayjs';
-import { KO_DATE_FORMAT } from '@/shared/constants.tsx';
+import { KO_DATE_FORMAT } from '@/shared/constants/constants.tsx';
 
 interface WorkItemFooterProps {
   date: string;
