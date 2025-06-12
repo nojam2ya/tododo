@@ -1,0 +1,23 @@
+@import 'pretendard/dist/web/static/pretendard.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply font-sans;
+    }
+}
+
+@layer components {
+    .flex-center-center {
+        @apply flex justify-center items-center
+    }
+
+    .flex-between-center {
+        @apply flex justify-between items-center
+    }
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
