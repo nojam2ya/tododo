@@ -1,7 +1,5 @@
 import RecentCompletedList from '@features/status/RecentCompleted/RecentCompletedList.tsx';
 import CardLargeTitle from '@features/status/CardLargeTitle.tsx';
-import BaseCard from '@components/BaseCard';
-import RoundButton from '@components/_buttons/RoundButton';
 
 const data = [
   {
@@ -32,19 +30,19 @@ const data = [
 
 const RecentCompleted = () => {
   return (
-    <BaseCard>
+    <div className={'card-base'}>
       <CardLargeTitle>완료작업</CardLargeTitle>
       <RecentCompletedList>
-        {data.map(work => (
+        {data.map(task => (
           <RecentCompletedList.RecentCompletedItem
-            completedDate={work.completedDate}
-            title={work.title}
-            content={work.content}
+            completedDate={task.completedDate}
+            title={task.title}
+            content={task.content}
           />
         ))}
       </RecentCompletedList>
-      <RoundButton className={'mt-4'}>더보기</RoundButton>
-    </BaseCard>
+      <button className={'round-button mt-4'}>더보기</button>
+    </div>
   );
 };
 

@@ -1,4 +1,3 @@
-import BaseCard from '@components/BaseCard';
 import CardTitle from '@features/status/CardTitle.tsx';
 
 interface CardProps {
@@ -9,11 +8,11 @@ interface CardProps {
 
 const ValueCard: React.FC<CardProps> = ({ content, footer, title }) => {
   return (
-    <BaseCard className={''}>
+    <div className={'card-base'}>
       <CardTitle>{title}</CardTitle>
       <p className={'font-bold text-2xl mt-1.5'}>{content}</p>
       <p className={'text-sm  text-gray-500'}>{footer}</p>
-    </BaseCard>
+    </div>
   );
 };
 

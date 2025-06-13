@@ -1,7 +1,6 @@
 import ValueCard from '@features/status/ValueCard.tsx';
 import { ArrowTrendingDownIcon, ArrowTrendingUpIcon } from '@heroicons/react/24/outline';
 import NotificationCard from '@features/status/NotificationCard';
-import BaseCard from '@components/BaseCard';
 import RecentCompleted from '@features/status/RecentCompleted';
 
 const StatusPage = () => {
@@ -47,7 +46,7 @@ const StatusPage = () => {
         content={'300 시간'}
         footer={'지난달 대비'}
       />
-      <BaseCard className={'col-span-2'}>chart</BaseCard>
+      <div className={'card-base col-span-2'}>chart</div>
       <RecentCompleted />
     </div>
   );

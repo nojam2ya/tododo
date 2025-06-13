@@ -1,10 +1,10 @@
 import MoreButton from '@components/_buttons/MoreButton';
 
-interface WorkItemHeaderProps {
+interface TaskItemHeaderProps {
   title: string;
 }
 
-const WorkItemHeader: React.FC<WorkItemHeaderProps> = ({ title }) => {
+const TaskItemHeader: React.FC<TaskItemHeaderProps> = ({ title }) => {
   return (
     <div className={'flex-between-center'}>
       <h6 className={'font-semibold'}>{title}</h6>
@@ -13,4 +13,4 @@ const WorkItemHeader: React.FC<WorkItemHeaderProps> = ({ title }) => {
   );
 };
 
-export default WorkItemHeader;
+export default TaskItemHeader;

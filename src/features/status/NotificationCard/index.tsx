@@ -1,10 +1,7 @@
-import BaseCard from '@components/BaseCard';
 import CardTitle from '@features/status/CardTitle.tsx';
 import NotificationList from '@features/status/NotificationCard/NotificationList.tsx';
 import type { Importance } from '@/types/global';
-import Tag from '@components/Tag';
 import dayjs from 'dayjs';
-import RoundButton from '@components/_buttons/RoundButton';
 
 const data = [
   {
@@ -34,29 +31,26 @@ const data = [
 ];
 
 const NotificationCard = () => {
-  /* tailwindcss classes */
-  const titleBase = 'flex-between-center gap-2';
-
   return (
-    <BaseCard className={'row-span-2'}>
+    <div className={'card-base row-span-2'}>
       <CardTitle>
-        <span className={titleBase}>
+        <span className={'flex-between-center gap-2'}>
           알림
-          <Tag title={`Today, ${dayjs().format('YYYY.MM.DD (ddd)')}`} />
+          <p className={'tag'}>Today, {dayjs().format('YYYY.MM.DD (ddd)')}</p>
         </span>
       </CardTitle>
       <NotificationList>
-        {data.map(work => (
+        {data.map(task => (
           <NotificationList.NotificationItem
-            key={work.id}
-            title={work.title}
-            date={work.date}
-            importance={work.importance as Importance}
+            key={task.id}
+            title={task.title}
+            date={task.date}
+            importance={task.importance as Importance}
           />
         ))}
       </NotificationList>
-      <RoundButton className={'mt-6'}>더보기</RoundButton>
-    </BaseCard>
+      <button className={'round-button mt-6'}>더보기</button>
+    </div>
   );
 };
 

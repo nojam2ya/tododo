@@ -9,6 +9,10 @@ export default {
       fontFamily: {
         sans: ['Pretendard', ...defaultTheme.fontFamily.sans],
       },
+      borderColor: {
+        primary: '#e3e3e3',
+        secondary: '#1b1b26',
+      },
       colors: {
         primary: '#5a5ad3',
         'primary-hover': '#4e4eb2',
@@ -20,10 +24,6 @@ export default {
           'secondary-hover': '#dddde5',
           'secondary-dark': '#1b1b26',
           'secondary-dark-hover': '#14141c',
-        },
-        border: {
-          primary: '#e3e3e3',
-          'primary-black': '#fff',
         },
         foreground: { DEFAULT: '#222', dark: '#fff' },
       },

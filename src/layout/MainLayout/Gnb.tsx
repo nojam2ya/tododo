@@ -21,14 +21,13 @@ const GnbItem: React.FC<GnbItemProps> = ({ id, path, icon, title }) => {
 
   /* tailwindcss classes */
   const base = 'flex items-center gap-3 pl-4 pr-4 p-2 rounded-lg ';
-  const dark = '';
   const hover = 'hover::bg-background-secondary-hover hover:dark:bg-background-secondary-dark-hover';
   const active = isActive ? 'bg-background-secondary-hover dark:bg-background-secondary-dark-hover' : '';
   const titleActive = isActive ? 'font-semibold' : 'font-normal';
 
   return (
     <li>
-      <Link className={clsx(base, dark, hover, active)} to={path}>
+      <Link className={clsx(base, hover, active)} to={path}>
         {isActive ? icon.active : icon.default}
         <span className={titleActive}>{title}</span>
       </Link>

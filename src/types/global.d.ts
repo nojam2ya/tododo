@@ -1,23 +1,18 @@
-import type { WorkStatusKey } from '@/shared/constants/workConstants.tsx';
+import type { TaskStatusKey } from '@/shared/constants/taskConstants.tsx';
 
 export type Importance = 'high' | 'medium' | 'low';
 
-export interface Work {
+export interface Task {
   id: string;
   title: string;
   content: string;
-  status: WorkStatusKey;
+  status: TaskStatusKey;
   tags: string[];
   date: string;
   completedDate?: string;
   importance: Importance;
   createdDate: string;
   updateDate: string;
-}
-
-export interface WorkStatus {
-  type: WorkStatusTypes;
-  works: Work[];
 }
 
 //////////////////////////////////////////////////
