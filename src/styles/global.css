@@ -29,7 +29,7 @@
 
     /* common card */
     .card-base {
-        @apply border border-primary border-solid rounded-lg p-6 transition-colors duration-300;
+        @apply border border-primary border-solid rounded-lg p-6 transition-colors duration-300 bg-white;
         @apply dark:border-secondary dark:bg-background-secondary-dark dark:border-white/10;
     }
 

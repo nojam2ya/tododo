@@ -36,7 +36,6 @@ const StatusPage = () => {
         content={'150'}
         footer={'지난달 대비'}
       />
-      `
       <ValueCard
         title={
           <span className={'flex-between-center'}>

@@ -6,6 +6,7 @@ import { useOpen } from '@/shared/hooks/useOpen.ts';
 import { useDarkMode } from '@stores/darkModeStore.ts';
 import ToggleDarkModeButton from '@layout/MainLayout/ToggleDarkModeButton.tsx';
 import { menus } from '@infra/router/routers.tsx';
+import { useRef } from 'react';
 
 const MainLayout = () => {
   const { isOpen, toggleOpen } = useOpen();
@@ -17,6 +18,8 @@ const MainLayout = () => {
   const contentBase = 'fixed h-dvh  p-20 right-0 top-0 overflow-auto transition-width duration-300';
   const contentActive = isOpen ? 'w-5/6' : 'w-dvw';
 
+  const containerRef = useRef<HTMLDivElement>(null);
+
   return (
     <div className={clsx(wrapBase, wrapDark)}>
       <ToggleGnbButton isOpen={isOpen} onClick={toggleOpen} />
@@ -25,9 +28,9 @@ const MainLayout = () => {
           <Gnb.GnbItem key={id} id={id} path={`/${path}`} title={title} icon={icon} />
         ))}
       </Gnb>
-      <div className={clsx(contentBase, contentActive)}>
+      <div className={clsx(contentBase, contentActive)} ref={containerRef}>
         <ToggleDarkModeButton onClick={toggleDarkMode} aria-label={'다크모드 토글 버튼'} />
-        <Outlet />
+        <Outlet context={{ containerRef }} />
       </div>
     </div>
   );

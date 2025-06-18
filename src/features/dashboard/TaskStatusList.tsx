@@ -1,8 +1,10 @@
 import type { ChildrenProps, Task } from '@/types/global';
 import PlusButton from '@components/_buttons/PlusButton';
-import TaskCard from 'src/components/TaskCard';
 import OverlayPopup from '@components/OverlayPopup';
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
+import DraggableTaskCard from '@/shared/components/DraggableTaskCard';
+import { useDroppable } from '@dnd-kit/core';
+import clsx from 'clsx';
 
 interface TaskStatusItemProps {
   title: string;
@@ -34,11 +36,15 @@ const TaskStatusItemHeader: React.FC<TaskStatusItemHeaderProps> = ({ title, coun
     </div>
   );
 };
-
 const TaskStatusItem: React.FC<TaskStatusItemProps> = ({ title, tasks }) => {
   const [isOpen, setIsOpen] = useState(false);
   const open = () => setIsOpen(true);
   const close = () => setIsOpen(false);
+
+  const { isOver, setNodeRef } = useDroppable({
+    id: `droppable-task-container-${title}`,
+  });
+
   return (
     <>
       <li className={'flex flex-col flex-1 relative gap-2'}>
@@ -47,9 +53,15 @@ const TaskStatusItem: React.FC<TaskStatusItemProps> = ({ title, tasks }) => {
           count={tasks.length}
           button={<PlusButton type="button" aria-label={`${title} 추가`} onClick={open} />}
         />
-        <ul className={'flex-grow flex flex-col gap-2'}>
+        <ul
+          className={clsx(
+            'flex-grow flex flex-col gap-2 rounded-lg transition-colors duration-300',
+            isOver ? 'bg-primary/20' : undefined,
+          )}
+          ref={setNodeRef}
+        >
           {tasks.map(task => (
-            <TaskCard key={task.id} task={task} />
+            <DraggableTaskCard key={task.id} task={task} draggableId={`draggable-task-${task.id}`} />
           ))}
         </ul>
       </li>
@@ -60,9 +72,15 @@ const TaskStatusItem: React.FC<TaskStatusItemProps> = ({ title, tasks }) => {
   );
 };
 
-const TaskStatusListComponent: React.FC<ChildrenProps> = ({ children }) => {
-  return <ul className={'flex justify-between gap-12 h-full'}>{children}</ul>;
-};
+const TaskStatusListComponent = forwardRef<HTMLUListElement, ChildrenProps & React.HTMLAttributes<HTMLUListElement>>(
+  ({ children, ...props }, ref) => {
+    return (
+      <ul className={'flex justify-between gap-12 h-full relative'} {...props} ref={ref}>
+        {children}
+      </ul>
+    );
+  },
+);
 
 type TaskStatusListType = typeof TaskStatusListComponent & {
   TaskStatusItem: typeof TaskStatusItem;
