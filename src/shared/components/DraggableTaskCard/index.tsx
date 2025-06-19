@@ -1,7 +1,7 @@
 import TaskCard from '@components/TaskCard';
-import { useDraggable } from '@dnd-kit/core';
 import type { Task } from '@/types/global';
-import clsx from 'clsx';
+import { CSS } from '@dnd-kit/utilities';
+import { useDraggable, useDroppable } from '@dnd-kit/core';
 
 interface DraggableTaskCardProps {
   draggableId: string;
@@ -9,26 +9,23 @@ interface DraggableTaskCardProps {
 }
 
 const DraggableTaskCard: React.FC<DraggableTaskCardProps> = ({ draggableId, task }) => {
-  const { attributes, listeners, setNodeRef, transform, over } = useDraggable({
-    id: draggableId,
-    data: task,
-  });
-  const style = transform
-    ? {
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-      }
-    : undefined;
+  const { attributes, listeners, setNodeRef: setDragRef, transform } = useDraggable({ id: draggableId, data: task });
+  const { isOver, setNodeRef: setDropRef } = useDroppable({ id: draggableId, data: task });
 
-  console.log(over);
-  return (
-    <TaskCard
-      task={task}
-      ref={setNodeRef}
-      className={clsx(transform ? `transform translate-x-[${transform.x}px] translate-y-[${transform.y}px]` : '')}
-      {...listeners}
-      {...attributes}
-    />
-  );
+  const style = {
+    transform: transform ? CSS.Transform.toString(transform) : undefined,
+    borderTop: isOver ? '4px solid #5a5ad3' : undefined,
+  };
+
+  // 드래그와 드롭 ref를 같이 연결
+  const setNodeRef = (el: HTMLLIElement | null) => {
+    if (el) {
+      setDragRef(el);
+      setDropRef(el);
+    }
+  };
+
+  return <TaskCard task={task} ref={setNodeRef} style={style} {...listeners} {...attributes} />;
 };
 
 export default DraggableTaskCard;
