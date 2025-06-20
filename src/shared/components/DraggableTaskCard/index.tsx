@@ -1,7 +1,7 @@
 import TaskCard from '@components/TaskCard';
 import type { Task } from '@/types/global';
-import { CSS } from '@dnd-kit/utilities';
-import { useDraggable, useDroppable } from '@dnd-kit/core';
+import { useSortable } from '@dnd-kit/sortable';
+import { useRectPosStrWithContext } from '@/shared/providers/PointermoveProvider/usePointermoveContext.ts';
 
 interface DraggableTaskCardProps {
   draggableId: string;
@@ -9,23 +9,34 @@ interface DraggableTaskCardProps {
 }
 
 const DraggableTaskCard: React.FC<DraggableTaskCardProps> = ({ draggableId, task }) => {
-  const { attributes, listeners, setNodeRef: setDragRef, transform } = useDraggable({ id: draggableId, data: task });
-  const { isOver, setNodeRef: setDropRef } = useDroppable({ id: draggableId, data: task });
+  const { isDragging, isOver, setNodeRef, listeners, attributes } = useSortable({
+    id: draggableId,
+    data: task,
+  });
+
+  const { posStr, ref } = useRectPosStrWithContext(isOver);
 
   const style = {
-    transform: transform ? CSS.Transform.toString(transform) : undefined,
-    borderTop: isOver ? '4px solid #5a5ad3' : undefined,
+    // visibility: isDragging ? 'hidden' : undefined,
+    opacity: isDragging ? '.3' : undefined,
+    borderTop: isOver && posStr === 'top' ? '4px solid #5a5ad3' : undefined,
+    borderBottom: isOver && posStr === 'bottom' ? '4px solid #5a5ad3' : undefined,
+    transition: isDragging ? 'none' : undefined,
   };
 
-  // 드래그와 드롭 ref를 같이 연결
-  const setNodeRef = (el: HTMLLIElement | null) => {
-    if (el) {
-      setDragRef(el);
-      setDropRef(el);
-    }
-  };
-
-  return <TaskCard task={task} ref={setNodeRef} style={style} {...listeners} {...attributes} />;
+  return (
+    <TaskCard
+      task={task}
+      ref={el => {
+        setNodeRef(el);
+        ref.current = el;
+      }}
+      data-id={draggableId}
+      style={style}
+      {...listeners}
+      {...attributes}
+    />
+  );
 };
 
 export default DraggableTaskCard;

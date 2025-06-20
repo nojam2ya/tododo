@@ -7,6 +7,7 @@ import {
   ChartBarIcon as ChartBarSolidIcon,
   RectangleGroupIcon as RectangleGroupSolidIcon,
 } from '@heroicons/react/24/solid';
+import { PointermoveProvider } from '@/shared/providers/PointermoveProvider';
 
 export interface Menu extends NonIndexRouteObject {
   id: string;
@@ -17,7 +18,11 @@ export const menus: Menu[] = [
   {
     id: 'dashboard',
     path: '',
-    element: <DashboardPage />,
+    element: (
+      <PointermoveProvider>
+        <DashboardPage />
+      </PointermoveProvider>
+    ),
     meta: {
       title: 'Dashboard',
       icon: {

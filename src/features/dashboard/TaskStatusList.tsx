@@ -3,11 +3,15 @@ import PlusButton from '@components/_buttons/PlusButton';
 import OverlayPopup from '@components/OverlayPopup';
 import { forwardRef, useState } from 'react';
 import DraggableTaskCard from '@/shared/components/DraggableTaskCard';
-import { useDroppable } from '@dnd-kit/core';
 import clsx from 'clsx';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { useDroppable } from '@dnd-kit/core';
+import type { TaskStatusKey } from '@/shared/constants/taskConstants.tsx';
+import { TASK_DROPPABLE_ID_PREFIX } from '@features/dashboard/constants.ts';
 
 interface TaskStatusItemProps {
   title: string;
+  id: TaskStatusKey;
   tasks: Task[];
 }
 
@@ -36,13 +40,14 @@ const TaskStatusItemHeader: React.FC<TaskStatusItemHeaderProps> = ({ title, coun
     </div>
   );
 };
-const TaskStatusItem: React.FC<TaskStatusItemProps> = ({ title, tasks }) => {
+const TaskStatusItem: React.FC<TaskStatusItemProps> = ({ title, tasks, id }) => {
   const [isOpen, setIsOpen] = useState(false);
   const open = () => setIsOpen(true);
   const close = () => setIsOpen(false);
 
-  const { isOver, setNodeRef } = useDroppable({
-    id: `droppable-task-container-${title}`,
+  const { setNodeRef } = useDroppable({
+    id: `${TASK_DROPPABLE_ID_PREFIX}${id}`,
+    data: { id },
   });
 
   return (
@@ -54,15 +59,15 @@ const TaskStatusItem: React.FC<TaskStatusItemProps> = ({ title, tasks }) => {
           button={<PlusButton type="button" aria-label={`${title} 추가`} onClick={open} />}
         />
         <ul
-          className={clsx(
-            'flex-grow flex flex-col gap-2 rounded-lg transition-colors duration-300',
-            isOver ? 'bg-primary/20' : undefined,
-          )}
+          className={clsx('flex-grow flex flex-col gap-2 rounded-lg transition-colors duration-300 h-full')}
           ref={setNodeRef}
+          data-container-id={id}
         >
-          {tasks.map(task => (
-            <DraggableTaskCard key={task.id} task={task} draggableId={`draggable-task-${task.id}`} />
-          ))}
+          <SortableContext items={tasks.map(task => task.id)} strategy={verticalListSortingStrategy}>
+            {tasks.map(task => (
+              <DraggableTaskCard key={task.id} task={task} draggableId={task.id} />
+            ))}
+          </SortableContext>
         </ul>
       </li>
       <OverlayPopup isOpen={isOpen} close={close}>

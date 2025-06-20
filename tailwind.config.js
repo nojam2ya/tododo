@@ -12,6 +12,8 @@ export default {
       borderColor: {
         primary: '#e3e3e3',
         secondary: '#1b1b26',
+        point: '#5a5ad3',
+        'point-hover': '#4e4eb2',
       },
       colors: {
         primary: '#5a5ad3',

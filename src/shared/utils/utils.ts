@@ -30,3 +30,8 @@ export const createBoundaryModifier = (boundaryRef: React.RefObject<HTMLElement 
     return { ...transform, x, y };
   };
 };
+
+export const getPosYStr = (clientY: number, rect: { top: number; height: number }): 'top' | 'bottom' => {
+  const midY = rect.top + rect.height / 2;
+  return clientY < midY ? 'top' : 'bottom';
+};

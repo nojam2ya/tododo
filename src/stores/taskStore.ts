@@ -1,10 +1,12 @@
 import { create } from 'zustand/react';
-import type { Task } from '@/types/global';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import dayjs from 'dayjs';
-import { FULL_DATE_FORMAT } from '@/shared/constants/constants.tsx';
-import type { TaskStatusKey } from '@/shared/constants/taskConstants.tsx';
 
+import type { Task } from '@/types/global';
+import type { TaskStatusKey } from '@/shared/constants/taskConstants.tsx';
+import { FULL_DATE_FORMAT } from '@/shared/constants/constants.tsx';
+
+// 초기 데이터
 const data: Task[] = [
   {
     id: '1',
@@ -54,7 +56,7 @@ const data: Task[] = [
     id: '56',
     status: 'inProgress',
     title: 'Database optimization',
-    content: 'Optimize database queries and add proper indexing\n' + '\n',
+    content: 'Optimize database queries and add proper indexing\n\n',
     date: '2025-12-14',
     tags: ['Design', 'UI/UX'],
     importance: 'high',
@@ -96,33 +98,57 @@ const data: Task[] = [
   },
 ];
 
+// 타입 정의
+type FromId = { fromId: string; status?: TaskStatusKey };
+type ToId = { toId: string; posYStr?: 'top' | 'bottom' };
+
 interface TaskStore {
   tasks: Task[];
   getTasksByStatus: (status: TaskStatusKey) => Task[];
   createTask: (task: Omit<Task, 'id' | 'createdDate' | 'updateDate'>) => void;
+  resortTask: (props: FromId | (FromId & ToId)) => void;
 }
 
+// 스토어 생성
 export const useTaskStore = create<TaskStore>()(
   persist(
     (set, get) => ({
       tasks: data,
-      getTasksByStatus(status) {
-        return get().tasks.filter(task => task.status === status);
+
+      getTasksByStatus: status => get().tasks.filter(task => task.status === status),
+
+      createTask: task => {
+        const now = dayjs().format(FULL_DATE_FORMAT);
+        const newTask: Task = {
+          ...task,
+          id: `${dayjs()}${task.status}`,
+          createdDate: now,
+          updateDate: now,
+        };
+        set(state => ({ tasks: [...state.tasks, newTask] }));
       },
-      createTask(task) {
-        const today = dayjs();
-        const curDate = today.format(FULL_DATE_FORMAT);
-        set(state => ({
-          tasks: [
-            ...state.tasks,
-            {
-              ...task,
-              id: `${today}${task.status}`,
-              createdDate: curDate,
-              updateDate: curDate,
-            },
-          ],
-        }));
+
+      resortTask: props => {
+        set(state => {
+          const { fromId, status } = props;
+          const fromTask = state.tasks.find(t => t.id === fromId);
+          if (!fromTask) return state;
+
+          const updatedTask = { ...fromTask, status: status ?? fromTask.status };
+          const filteredTasks = state.tasks.filter(t => t.id !== fromId);
+
+          if (!('toId' in props) || !props.toId) {
+            return { tasks: [...filteredTasks, updatedTask] };
+          }
+
+          const { toId, posYStr = 'bottom' } = props;
+          const index = filteredTasks.findIndex(t => t.id === toId);
+          if (index === -1) return { tasks: [...filteredTasks, updatedTask] };
+
+          const before = filteredTasks.slice(0, posYStr === 'top' ? index : index + 1);
+          const after = filteredTasks.slice(posYStr === 'top' ? index : index + 1);
+          return { tasks: [...before, updatedTask, ...after] };
+        });
       },
     }),
     {
