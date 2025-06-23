@@ -3,8 +3,8 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 import dayjs from 'dayjs';
 
 import type { Task } from '@/types/global';
-import type { TaskStatusKey } from '@/shared/constants/taskConstants.tsx';
-import { FULL_DATE_FORMAT } from '@/shared/constants/constants.tsx';
+import type { TaskStatusKey } from '@shared/constants/taskConstants.tsx';
+import { FULL_DATE_FORMAT } from '@shared/constants/constants.tsx';
 
 // 초기 데이터
 const data: Task[] = [
@@ -15,7 +15,7 @@ const data: Task[] = [
     content: 'Create wireframes and mockups for the new landing page',
     date: '2025-12-15',
     tags: ['Design', 'UI/UX'],
-    importance: 'medium',
+    priority: 'medium',
     createdDate: '2025-12-15',
     updateDate: '2025-12-15',
   },
@@ -26,7 +26,7 @@ const data: Task[] = [
     content: 'Implement user login and registration system',
     date: '2025-12-15',
     tags: ['Backend', 'Auth'],
-    importance: 'high',
+    priority: 'high',
     createdDate: '2025-12-15',
     updateDate: '2025-12-15',
   },
@@ -37,7 +37,7 @@ const data: Task[] = [
     content: 'Create wireframes and mockups for the new landing page',
     date: '2025-12-15',
     tags: ['Design', 'UI/UX'],
-    importance: 'low',
+    priority: 'low',
     createdDate: '2025-12-15',
     updateDate: '2025-12-15',
   },
@@ -48,7 +48,7 @@ const data: Task[] = [
     content: 'Build the main dashboard with analytics and user data',
     date: '2025-12-15',
     tags: ['Frontend', 'Dashboard'],
-    importance: 'medium',
+    priority: 'medium',
     createdDate: '2025-12-15',
     updateDate: '2025-12-15',
   },
@@ -59,7 +59,7 @@ const data: Task[] = [
     content: 'Optimize database queries and add proper indexing\n\n',
     date: '2025-12-14',
     tags: ['Design', 'UI/UX'],
-    importance: 'high',
+    priority: 'high',
     createdDate: '2025-12-15',
     updateDate: '2025-12-15',
   },
@@ -70,7 +70,7 @@ const data: Task[] = [
     content: 'Create wireframes and mockups for the new landing page',
     date: '2025-12-12',
     tags: ['Design', 'UI/UX'],
-    importance: 'low',
+    priority: 'low',
     createdDate: '2025-12-15',
     updateDate: '2025-12-15',
   },
@@ -81,7 +81,7 @@ const data: Task[] = [
     content: 'Initialize project structure and dependencies',
     date: '2025-12-01',
     tags: ['Setup'],
-    importance: 'medium',
+    priority: 'medium',
     createdDate: '2025-12-15',
     updateDate: '2025-12-15',
   },
@@ -92,7 +92,7 @@ const data: Task[] = [
     content: 'Create component library and design tokens',
     date: '2025-12-05',
     tags: ['Design', 'UI/UX'],
-    importance: 'high',
+    priority: 'high',
     createdDate: '2025-12-15',
     updateDate: '2025-12-15',
   },

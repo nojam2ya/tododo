@@ -8,7 +8,7 @@ const data = [
     content: 'New tasks available for review',
     date: '2025-05-15',
     completedDate: '2025-05-15',
-    importance: 'low',
+    Priority: 'low',
   },
   {
     id: '2',
@@ -16,7 +16,7 @@ const data = [
     content: 'Task review meeting',
     date: '2025-05-16',
     completedDate: '2025-05-16',
-    importance: 'medium',
+    Priority: 'medium',
   },
   {
     id: '3',
@@ -24,7 +24,7 @@ const data = [
     content: 'New task assignments',
     date: '2025-05-22',
     completedDate: '2025-05-22',
-    importance: 'high',
+    Priority: 'high',
   },
 ];
 

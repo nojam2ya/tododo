@@ -10,7 +10,7 @@ export default {
         sans: ['Pretendard', ...defaultTheme.fontFamily.sans],
       },
       borderColor: {
-        primary: '#e3e3e3',
+        primary: '#dbdbe8',
         secondary: '#1b1b26',
         point: '#5a5ad3',
         'point-hover': '#4e4eb2',

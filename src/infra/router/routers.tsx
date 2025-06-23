@@ -7,7 +7,8 @@ import {
   ChartBarIcon as ChartBarSolidIcon,
   RectangleGroupIcon as RectangleGroupSolidIcon,
 } from '@heroicons/react/24/solid';
-import { PointermoveProvider } from '@/shared/providers/PointermoveProvider';
+import PointermoveProvider from '@shared/providers/PointermoveProvider';
+import OverlayPopupProvider from '@shared/providers/OverlayPopupProvider';
 
 export interface Menu extends NonIndexRouteObject {
   id: string;
@@ -24,7 +25,7 @@ export const menus: Menu[] = [
       </PointermoveProvider>
     ),
     meta: {
-      title: 'Dashboard',
+      title: '대시보드',
       icon: {
         default: <RectangleGroupIcon className={'w-6 h-6'} />,
         active: <RectangleGroupSolidIcon className={'w-6 h-6'} />,
@@ -36,7 +37,7 @@ export const menus: Menu[] = [
     path: 'status',
     element: <StatusPage />,
     meta: {
-      title: 'Status',
+      title: '현황',
       icon: {
         default: <ChartBarIcon className={'w-6 h-6'} />,
         active: <ChartBarSolidIcon className={'w-6 h-6'} />,
@@ -48,7 +49,11 @@ export const menus: Menu[] = [
 export const routers: CustomRouteObject[] = [
   {
     path: '',
-    element: <MainLayout />,
+    element: (
+      <OverlayPopupProvider>
+        <MainLayout />
+      </OverlayPopupProvider>
+    ),
     children: menus,
   },
 ];

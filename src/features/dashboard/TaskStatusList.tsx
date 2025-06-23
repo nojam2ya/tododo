@@ -1,13 +1,13 @@
 import type { ChildrenProps, Task } from '@/types/global';
 import PlusButton from '@components/_buttons/PlusButton';
-import OverlayPopup from '@components/OverlayPopup';
-import { forwardRef, useState } from 'react';
-import DraggableTaskCard from '@/shared/components/DraggableTaskCard';
+import { forwardRef, useContext } from 'react';
+import DraggableTaskCard from '@shared/components/DraggableTaskCard';
 import clsx from 'clsx';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { useDroppable } from '@dnd-kit/core';
-import type { TaskStatusKey } from '@/shared/constants/taskConstants.tsx';
+import type { TaskStatusKey } from '@shared/constants/taskConstants.tsx';
 import { TASK_DROPPABLE_ID_PREFIX } from '@features/dashboard/constants.ts';
+import { OverlayPopupDispatchContext } from '@shared/providers/OverlayPopupProvider/OverlayPopupContext.ts';
 
 interface TaskStatusItemProps {
   title: string;
@@ -41,9 +41,10 @@ const TaskStatusItemHeader: React.FC<TaskStatusItemHeaderProps> = ({ title, coun
   );
 };
 const TaskStatusItem: React.FC<TaskStatusItemProps> = ({ title, tasks, id }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const open = () => setIsOpen(true);
-  const close = () => setIsOpen(false);
+  const { open } = useContext(OverlayPopupDispatchContext);
+  const handleOpen = () => {
+    open({ key: 'ADD_NEW_TASK_POPUP' });
+  };
 
   const { setNodeRef } = useDroppable({
     id: `${TASK_DROPPABLE_ID_PREFIX}${id}`,
@@ -56,7 +57,7 @@ const TaskStatusItem: React.FC<TaskStatusItemProps> = ({ title, tasks, id }) => 
         <TaskStatusItemHeader
           title={title}
           count={tasks.length}
-          button={<PlusButton type="button" aria-label={`${title} 추가`} onClick={open} />}
+          button={<PlusButton type="button" aria-label={`${title} 추가`} onClick={handleOpen} />}
         />
         <ul
           className={clsx('flex-grow flex flex-col gap-2 rounded-lg transition-colors duration-300 h-full')}
@@ -70,9 +71,6 @@ const TaskStatusItem: React.FC<TaskStatusItemProps> = ({ title, tasks, id }) => 
           </SortableContext>
         </ul>
       </li>
-      <OverlayPopup isOpen={isOpen} close={close}>
-        test
-      </OverlayPopup>
     </>
   );
 };

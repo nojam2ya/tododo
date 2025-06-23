@@ -1,0 +1,12 @@
+@layer utilities {
+    /* common card */
+    .card-base {
+        @apply border border-primary border-solid rounded-lg p-6 transition-colors duration-300 bg-white;
+        @apply dark:border-secondary dark:bg-background-secondary-dark dark:border-white/10;
+    }
+
+    /* common card:hover */
+    .card-hover {
+        @apply hover:bg-background-secondary/50 dark:hover:bg-background-secondary-dark-hover/50;
+    }
+}

@@ -1,0 +1,25 @@
+@layer utilities {
+    .common-input-container {
+        @apply pt-2 pb-2;
+
+        & {
+            label {
+                @apply block font-semibold break-keep;
+            }
+
+            input, textarea, select {
+                @apply input-box
+            }
+
+            select {
+                @apply bg-none
+            }
+        }
+
+        &:focus-within {
+            label {
+                @apply text-primary
+            }
+        }
+    }
+}

@@ -1,23 +1,15 @@
-import { useContext, useEffect, useRef, useState } from 'react';
-import { getPosYStr } from '@/shared/utils/utils.ts';
-import { PointermoveContext } from '@/shared/providers/PointermoveProvider/PointermoveContext.ts';
+import { useContext, useEffect, useRef } from 'react';
+import { PointermoveContext } from '@shared/providers/PointermoveProvider/PointermoveContext.ts';
 
-export const useRectPosStrWithContext = (isOver: boolean) => {
-  const ref = useRef<HTMLElement | null>(null);
-  const [posStr, setPosStr] = useState<'top' | 'bottom' | null>(null);
-
-  const { position } = useContext(PointermoveContext);
+export const useRectPosYStrWithContext = (ref: React.RefObject<HTMLElement | null>, isOver: boolean) => {
+  const context = useContext(PointermoveContext);
+  const posYRef = useRef<'top' | 'bottom'>('bottom');
 
   useEffect(() => {
-    if (!isOver) {
-      setPosStr(null);
-      return;
-    }
-
-    if (!ref.current) return;
+    if (!isOver || !ref.current) return;
     const rect = ref.current.getBoundingClientRect();
-    setPosStr(getPosYStr(position.y, rect));
-  }, [isOver, position]);
+    posYRef.current = context.position.y < rect.top + rect.height / 2 ? 'top' : 'bottom';
+  }, [ref, context.position, isOver]);
 
-  return { ref, posStr };
+  return posYRef.current;
 };

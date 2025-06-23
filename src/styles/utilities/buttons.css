@@ -1,0 +1,6 @@
+@layer utilities {
+    .round-button {
+        @apply rounded-lg bg-primary/80 w-full p-2 text-white text-sm  transition-colors duration-300;
+        @apply hover:bg-primary-hover/80
+    }
+}

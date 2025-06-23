@@ -1,40 +1,43 @@
 import { createPortal } from 'react-dom';
 import type { ChildrenProps } from '@/types/global';
-import { XMarkIcon } from '@heroicons/react/24/outline';
+import { useContext } from 'react';
+import { OverlayPopupContext } from '@shared/providers/OverlayPopupProvider/OverlayPopupContext.ts';
+import OverlayPopupContent from '@components/OverlayPopup/OverlayPopupContent.tsx';
 
-interface OverlayPopup extends ChildrenProps {
-  isOpen: boolean;
-  close: () => void;
-  $width?: string;
-  $height?: string;
+interface OverlayPopupProps extends ChildrenProps {
+  $width: string;
+  $height: string;
 }
 
-const OverlayPopup: React.FC<OverlayPopup> = ({ isOpen, close, children, $width = '40%', $height = '50%' }) => {
+const OverlayPopupComp: React.FC<OverlayPopupProps> = ({ children, $width, $height }) => {
+  const { isOpen } = useContext(OverlayPopupContext);
   return (
     isOpen &&
     createPortal(
-      <div
-        className={
-          'flex-center-center fixed  top-0 left-0 bottom-0 right-0 overflow-hidden w-dvw h-dvh backdrop-blur-sm bg-black/30'
-        }
-        onClick={close}
-      >
-        <div
-          style={{ width: $width, height: $height }}
-          className={
-            'relative border border-primary/10 border-solid bg-background-primary dark:bg-background-primary-dark rounded-lg text-foreground dark:text-foreground-dark p-4 '
-          }
-          onClick={e => e.stopPropagation()}
-        >
-          <button className={'absolute right-6 top-6'} onClick={close}>
-            <XMarkIcon className={'w-6 h-6 opacity-50'} />
-          </button>
-          {children}
-        </div>
-      </div>,
+      <OverlayPopupContent $width={$width} $height={$height}>
+        {children}
+      </OverlayPopupContent>,
       document.body,
     )
   );
 };
+
+const Title: React.FC<ChildrenProps> = ({ children }) => {
+  return (
+    <h3 className={'font-semibold text-xl border-b border-solid border-primary dark:border-white/20 pb-2'}>
+      {children}
+    </h3>
+  );
+};
+
+const Description: React.FC<ChildrenProps> = ({ children }) => {
+  return <p className={'pt-2 pb-2 opacity-50 text-sm font-light'}>{children}</p>;
+};
+
+type OverlayPopup = typeof OverlayPopupComp & { Title: typeof Title; Description: typeof Description };
+
+const OverlayPopup = OverlayPopupComp as OverlayPopup;
+OverlayPopup.Title = Title;
+OverlayPopup.Description = Description;
 
 export default OverlayPopup;

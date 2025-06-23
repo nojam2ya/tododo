@@ -14,3 +14,20 @@ export const TASK_STATUS = {
 } as const;
 
 export type TaskStatusKey = (typeof TASK_STATUS)[keyof typeof TASK_STATUS]['KEY'];
+
+export const TASK_Priority = {
+  HIGH: {
+    TITLE: 'high',
+    KEY: 'high',
+  },
+  MEDIUM: {
+    TITLE: 'medium',
+    KEY: 'medium',
+  },
+  LOW: {
+    TITLE: 'low',
+    KEY: 'low',
+  },
+} as const;
+
+export type TaskPriorityKey = (typeof TASK_Priority)[keyof typeof TASK_Priority]['KEY'];

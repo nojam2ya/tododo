@@ -1,0 +1,64 @@
+import {
+  OverlayPopupContext,
+  OverlayPopupDispatchContext,
+} from '@shared/providers/OverlayPopupProvider/OverlayPopupContext.ts';
+import type { ChildrenProps } from '@/types/global';
+import { type ComponentType, type LazyExoticComponent, useMemo, useState } from 'react';
+import OverlayPopup from '@components/OverlayPopup';
+import {
+  OVERLAY_POPUP_REGISTRY,
+  type OverlayPopupKey,
+  type OverlayPopupPropsMap,
+} from '@shared/providers/OverlayPopupProvider/constants.ts';
+import { useEscKeydown } from '@shared/providers/OverlayPopupProvider/useKeypress.ts';
+
+interface PopupOverlayContent {
+  Component: LazyExoticComponent<ComponentType<any>>;
+  props?: unknown;
+}
+
+const OverlayPopupProvider: React.FC<ChildrenProps> = ({ children }) => {
+  const [size, setSize] = useState<{ $width: string; $height: string }>({ $width: '40%', $height: '50%' });
+  const [isOpen, setIsOpen] = useState(false);
+  const [overlayPopupContent, setOverlayPopupContent] = useState<PopupOverlayContent>();
+
+  const open = <K extends OverlayPopupKey>({ key, props }: { key: K; props?: OverlayPopupPropsMap[K] }) => {
+    setOverlayPopupContent({ Component: OVERLAY_POPUP_REGISTRY[key], props });
+    setIsOpen(true);
+  };
+
+  const close = () => {
+    setOverlayPopupContent(undefined);
+    setIsOpen(false);
+  };
+
+  const handleSize = (props: { $width?: string; $height?: string }) => {
+    setSize(prev => ({
+      ...prev,
+      ...props,
+    }));
+  };
+
+  const dispatch = useMemo(() => ({ open, close, handleSize }), []);
+
+  useEscKeydown(dispatch.close);
+
+  return (
+    <OverlayPopupContext.Provider value={{ isOpen, size }}>
+      <OverlayPopupDispatchContext.Provider value={dispatch}>
+        {children}
+        {isOpen && overlayPopupContent && (
+          <OverlayPopup {...size}>
+            {overlayPopupContent.props ? (
+              <overlayPopupContent.Component {...(overlayPopupContent.props as object)} />
+            ) : (
+              <overlayPopupContent.Component />
+            )}
+          </OverlayPopup>
+        )}
+      </OverlayPopupDispatchContext.Provider>
+    </OverlayPopupContext.Provider>
+  );
+};
+
+export default OverlayPopupProvider;

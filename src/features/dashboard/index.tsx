@@ -1,9 +1,9 @@
 import TaskStatusList from '@features/dashboard/TaskStatusList.tsx';
 import { useTaskStore } from '@stores/taskStore.ts';
-import { TASK_STATUS } from '@/shared/constants/taskConstants.tsx';
+import { TASK_STATUS } from '@shared/constants/taskConstants.tsx';
 import { closestCorners, DndContext, DragOverlay, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { useRef } from 'react';
-import { createBoundaryModifier } from '@/shared/utils/utils.ts';
+import { createBoundaryModifier } from '@shared/utils/utils.ts';
 import { useMainLayoutOutletContext } from '@layout/MainLayout/useMainLayoutOutletContext.ts';
 import TaskCard from '@components/TaskCard';
 import { useDragOverlayTask } from '@features/dashboard/useDragOverlayTask.ts';

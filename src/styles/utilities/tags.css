@@ -1,0 +1,19 @@
+@layer utilities {
+    /* tag */
+    .tag {
+        @apply text-xs font-medium text-black/50 bg-background-secondary pl-3 pr-3 p-1 rounded-full;
+        @apply dark:text-white/60 dark:bg-black/50;
+    }
+
+    .high-tag {
+        @apply high-text high-bg high-border
+    }
+
+    .medium-tag {
+        @apply medium-text medium-bg medium-border
+    }
+
+    .low-tag {
+        @apply low-text low-bg low-border
+    }
+}

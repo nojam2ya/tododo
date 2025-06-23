@@ -1,45 +1,13 @@
 @import 'pretendard/dist/web/static/pretendard.css';
 
+@import './customVariants.css';
+@import './utilities/tags.css';
+@import './utilities/cards.css';
+@import './utilities/buttons.css';
+@import './utilities/inputs.css';
+@import './componnets.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-    body {
-        @apply font-sans;
-    }
-}
-
-@layer components {
-    .flex-center-center {
-        @apply flex justify-center items-center
-    }
-
-    .flex-between-center {
-        @apply flex justify-between items-center
-    }
-}
-
-@layer utilities {
-    /* tag */
-    .tag {
-        @apply text-xs font-medium text-black/50 bg-background-secondary pl-3 pr-3 p-1 rounded-full;
-        @apply dark:text-white/60 dark:bg-black/50;
-    }
-
-    /* common card */
-    .card-base {
-        @apply border border-primary border-solid rounded-lg p-6 transition-colors duration-300 bg-white;
-        @apply dark:border-secondary dark:bg-background-secondary-dark dark:border-white/10;
-    }
-
-    .card-hover {
-        @apply hover:bg-background-secondary/50 dark:hover:bg-background-secondary-dark-hover/50;
-    }
-
-    .round-button {
-        @apply rounded-lg bg-primary/80 w-full p-2 text-white text-sm hover:bg-primary-hover/80 transition-colors duration-300
-    }
-}
-
-@custom-variant dark (&:where(.dark, .dark *));

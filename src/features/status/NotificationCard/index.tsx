@@ -1,32 +1,32 @@
 import CardTitle from '@features/status/CardTitle.tsx';
 import NotificationList from '@features/status/NotificationCard/NotificationList.tsx';
-import type { Importance } from '@/types/global';
 import dayjs from 'dayjs';
+import type { TaskPriorityKey } from '@shared/constants/taskConstants.tsx';
 
 const data = [
   {
     id: '1',
     title: 'New tasks available for review',
     date: '2025-06-15',
-    importance: 'low',
+    priority: 'low',
   },
   {
     id: '2',
     title: 'Task review meeting',
     date: '2025-06-16',
-    importance: 'medium',
+    priority: 'medium',
   },
   {
     id: '3',
     title: 'New task assignments',
     date: '2025-06-22',
-    importance: 'high',
+    priority: 'high',
   },
   {
     id: '4',
     title: 'Task review meeting',
     date: '2025-06-42',
-    importance: 'medium',
+    priority: 'medium',
   },
 ];
 
@@ -45,7 +45,7 @@ const NotificationCard = () => {
             key={task.id}
             title={task.title}
             date={task.date}
-            importance={task.importance as Importance}
+            priority={task.priority as TaskPriorityKey}
           />
         ))}
       </NotificationList>

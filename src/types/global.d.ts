@@ -1,6 +1,4 @@
-import type { TaskStatusKey } from '@/shared/constants/taskConstants.tsx';
-
-export type Importance = 'high' | 'medium' | 'low';
+import type { TaskPriorityKey, TaskStatusKey } from '@shared/constants/taskConstants.tsx';
 
 export interface Task {
   id: string;
@@ -10,7 +8,7 @@ export interface Task {
   tags: string[];
   date: string;
   completedDate?: string;
-  importance: Importance;
+  priority: TaskPriorityKey;
   createdDate: string;
   updateDate: string;
 }

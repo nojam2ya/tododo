@@ -1,4 +1,6 @@
 import { type Modifier } from '@dnd-kit/core';
+import type { TaskPriorityKey } from '@shared/constants/taskConstants.tsx';
+import clsx from 'clsx';
 
 export const createBoundaryModifier = (boundaryRef: React.RefObject<HTMLElement | null>): Modifier => {
   return ({ transform, draggingNodeRect }) => {
@@ -32,6 +34,42 @@ export const createBoundaryModifier = (boundaryRef: React.RefObject<HTMLElement 
 };
 
 export const getPosYStr = (clientY: number, rect: { top: number; height: number }): 'top' | 'bottom' => {
-  const midY = rect.top + rect.height / 2;
+  const midY = rect.top + rect.height / 2; // half top or half bottom
   return clientY < midY ? 'top' : 'bottom';
+};
+
+export const getPriorityStyle = (
+  key: TaskPriorityKey,
+  targetStyle: {
+    text?: boolean;
+    bg?: boolean;
+    border?: boolean;
+    tag?: boolean;
+  },
+) => {
+  const { text, border, bg, tag } = targetStyle;
+  switch (key) {
+    case 'high':
+      return clsx({
+        'high-text': text,
+        'high-bg': bg,
+        'high-border': border,
+        'high-tag': tag,
+      });
+    case 'medium':
+      return clsx({
+        'medium-text': text,
+        'medium-bg': bg,
+        'medium-border': border,
+        'medium-tag': tag,
+      });
+    case 'low':
+      return clsx({
+        'low-text': text,
+        'low-bg': bg,
+        'low-border': border,
+        'low-tag': tag,
+      });
+  }
+  return '';
 };

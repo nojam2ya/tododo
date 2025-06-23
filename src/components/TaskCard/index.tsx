@@ -20,7 +20,7 @@ const TaskCard = forwardRef<HTMLLIElement, TaskCardProps>(({ task, className, ..
           </li>
         ))}
       </ul>
-      <TaskItemFooter importance={task.importance} date={task.date} />
+      <TaskItemFooter priority={task.priority} date={task.date} />
     </li>
   );
 });

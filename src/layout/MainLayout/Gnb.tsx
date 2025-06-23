@@ -1,6 +1,6 @@
 import { menus } from '@infra/router/routers.tsx';
 import clsx from 'clsx';
-import { useCurrentRoute } from '@/shared/hooks/useCurrentRoute.tsx';
+import { useCurrentRoute } from '@shared/hooks/useCurrentRoute.tsx';
 import { Link } from 'react-router';
 import type { ChildrenProps } from '@/types/global';
 
@@ -22,8 +22,8 @@ const GnbItem: React.FC<GnbItemProps> = ({ id, path, icon, title }) => {
   /* tailwindcss classes */
   const base = 'flex items-center gap-3 pl-4 pr-4 p-2 rounded-lg ';
   const hover = 'hover::bg-background-secondary-hover hover:dark:bg-background-secondary-dark-hover';
-  const active = isActive ? 'bg-background-secondary-hover dark:bg-background-secondary-dark-hover' : '';
-  const titleActive = isActive ? 'font-semibold' : 'font-normal';
+  const active = isActive && 'bg-background-secondary-hover dark:bg-background-secondary-dark-hover';
+  const titleActive = isActive ? 'font-bold' : 'font-medium';
 
   return (
     <li>

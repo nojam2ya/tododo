@@ -2,7 +2,7 @@ import { Outlet } from 'react-router';
 import Gnb from './Gnb.tsx';
 import clsx from 'clsx';
 import ToggleGnbButton from './ToggleGnbButton.tsx';
-import { useOpen } from '@/shared/hooks/useOpen.ts';
+import { useOpen } from '@shared/hooks/useOpen.ts';
 import { useDarkMode } from '@stores/darkModeStore.ts';
 import ToggleDarkModeButton from '@layout/MainLayout/ToggleDarkModeButton.tsx';
 import { menus } from '@infra/router/routers.tsx';
