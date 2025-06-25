@@ -1,19 +1,30 @@
 export const TASK_STATUS = {
-  TO_DO: {
-    TITLE: 'To do',
-    KEY: 'todo',
-  },
-  IN_PROGRESS: {
-    TITLE: 'In progress',
-    KEY: 'inProgress',
-  },
-  COMPElTED: {
-    TITLE: 'Completed',
-    KEY: 'completed',
-  },
+  TODO: 'todo',
+  IN_PROGRESS: 'inProgress',
+  COMPLETED: 'completed',
 } as const;
 
-export type TaskStatusKey = (typeof TASK_STATUS)[keyof typeof TASK_STATUS]['KEY'];
+export const TASK_STATUS_TITLE_MAP = {
+  [TASK_STATUS.TODO]: 'To do',
+  [TASK_STATUS.IN_PROGRESS]: 'In progress',
+  [TASK_STATUS.COMPLETED]: 'Completed',
+} as const;
+
+export type TaskStatusKey = (typeof TASK_STATUS)[keyof typeof TASK_STATUS];
+
+export const TASK_PRIORITY = {
+  HIGH: 'high',
+  MEDIUM: 'medium',
+  LOW: 'low',
+} as const;
+
+export const TASK_PRIORITY_TITLE_MAP = {
+  [TASK_PRIORITY.HIGH]: 'high',
+  [TASK_PRIORITY.MEDIUM]: 'medium',
+  [TASK_PRIORITY.LOW]: 'low',
+} as const;
+
+export type TaskPriorityKey = (typeof TASK_PRIORITY)[keyof typeof TASK_PRIORITY];
 
 export const TASK_Priority = {
   HIGH: {
@@ -30,4 +41,5 @@ export const TASK_Priority = {
   },
 } as const;
 
-export type TaskPriorityKey = (typeof TASK_Priority)[keyof typeof TASK_Priority]['KEY'];
+// export type TaskPriorityKey = (typeof TASK_Priority)[keyof typeof TASK_Priority]['KEY'];
+

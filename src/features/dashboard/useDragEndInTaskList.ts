@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { PointermoveContext } from '@shared/providers/PointermoveProvider/PointermoveContext.ts';
+import { PointermoveProviderContext } from '@shared/providers/PointermoveProvider/PointermoveProvider.context.ts';
 import type { DragEndEvent } from '@dnd-kit/core';
 import { TASK_DROPPABLE_ID_PREFIX } from '@features/dashboard/constants.ts';
 import { getPosYStr } from '@shared/utils/utils.ts';
@@ -7,7 +7,7 @@ import { useTaskStore } from '@stores/taskStore.ts';
 
 export const useDragEndInTaskList = (callback?: () => void) => {
   const resortTask = useTaskStore(state => state.resortTask);
-  const { position } = useContext(PointermoveContext);
+  const { position } = useContext(PointermoveProviderContext);
 
   return (event: DragEndEvent) => {
     callback?.();

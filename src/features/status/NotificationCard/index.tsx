@@ -49,7 +49,7 @@ const NotificationCard = () => {
           />
         ))}
       </NotificationList>
-      <button className={'round-button mt-6'}>더보기</button>
+      <button className={'round-button w-full mt-6'}>더보기</button>
     </div>
   );
 };

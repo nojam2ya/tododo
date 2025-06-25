@@ -41,7 +41,7 @@ const RecentCompleted = () => {
           />
         ))}
       </RecentCompletedList>
-      <button className={'round-button mt-4'}>더보기</button>
+      <button className={'round-button w-full mt-4'}>더보기</button>
     </div>
   );
 };

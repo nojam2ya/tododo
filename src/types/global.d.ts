@@ -13,6 +13,11 @@ export interface Task {
   updateDate: string;
 }
 
+export interface Tag {
+  id: string;
+  title: string;
+}
+
 //////////////////////////////////////////////////
 
 export interface ChildrenProps {

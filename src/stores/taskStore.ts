@@ -6,7 +6,6 @@ import type { Task } from '@/types/global';
 import type { TaskStatusKey } from '@shared/constants/taskConstants.tsx';
 import { FULL_DATE_FORMAT } from '@shared/constants/constants.tsx';
 
-// 초기 데이터
 const data: Task[] = [
   {
     id: '1',
@@ -14,7 +13,7 @@ const data: Task[] = [
     title: 'Design new landing page',
     content: 'Create wireframes and mockups for the new landing page',
     date: '2025-12-15',
-    tags: ['Design', 'UI/UX'],
+    tags: ['1', '2'], // Design, UI/UX
     priority: 'medium',
     createdDate: '2025-12-15',
     updateDate: '2025-12-15',
@@ -25,7 +24,7 @@ const data: Task[] = [
     title: 'Set up authentication',
     content: 'Implement user login and registration system',
     date: '2025-12-15',
-    tags: ['Backend', 'Auth'],
+    tags: ['3', '4'], // Backend, Auth
     priority: 'high',
     createdDate: '2025-12-15',
     updateDate: '2025-12-15',
@@ -36,7 +35,7 @@ const data: Task[] = [
     title: 'Design new landing page',
     content: 'Create wireframes and mockups for the new landing page',
     date: '2025-12-15',
-    tags: ['Design', 'UI/UX'],
+    tags: ['1', '2'],
     priority: 'low',
     createdDate: '2025-12-15',
     updateDate: '2025-12-15',
@@ -47,7 +46,7 @@ const data: Task[] = [
     title: 'Implement user dashboard',
     content: 'Build the main dashboard with analytics and user data',
     date: '2025-12-15',
-    tags: ['Frontend', 'Dashboard'],
+    tags: ['5', '6'], // Frontend, Dashboard
     priority: 'medium',
     createdDate: '2025-12-15',
     updateDate: '2025-12-15',
@@ -58,7 +57,7 @@ const data: Task[] = [
     title: 'Database optimization',
     content: 'Optimize database queries and add proper indexing\n\n',
     date: '2025-12-14',
-    tags: ['Design', 'UI/UX'],
+    tags: ['1', '2'],
     priority: 'high',
     createdDate: '2025-12-15',
     updateDate: '2025-12-15',
@@ -69,7 +68,7 @@ const data: Task[] = [
     title: 'Design new landing page',
     content: 'Create wireframes and mockups for the new landing page',
     date: '2025-12-12',
-    tags: ['Design', 'UI/UX'],
+    tags: ['1', '2'],
     priority: 'low',
     createdDate: '2025-12-15',
     updateDate: '2025-12-15',
@@ -80,7 +79,7 @@ const data: Task[] = [
     title: 'Project setup',
     content: 'Initialize project structure and dependencies',
     date: '2025-12-01',
-    tags: ['Setup'],
+    tags: ['7'], // Setup
     priority: 'medium',
     createdDate: '2025-12-15',
     updateDate: '2025-12-15',
@@ -91,7 +90,7 @@ const data: Task[] = [
     title: 'Design system',
     content: 'Create component library and design tokens',
     date: '2025-12-05',
-    tags: ['Design', 'UI/UX'],
+    tags: ['1', '2'],
     priority: 'high',
     createdDate: '2025-12-15',
     updateDate: '2025-12-15',
@@ -105,7 +104,7 @@ type ToId = { toId: string; posYStr?: 'top' | 'bottom' };
 interface TaskStore {
   tasks: Task[];
   getTasksByStatus: (status: TaskStatusKey) => Task[];
-  createTask: (task: Omit<Task, 'id' | 'createdDate' | 'updateDate'>) => void;
+  createTask: (task: Omit<Task, 'id' | 'createdDate' | 'updateDate'>) => Task;
   resortTask: (props: FromId | (FromId & ToId)) => void;
 }
 
@@ -126,6 +125,7 @@ export const useTaskStore = create<TaskStore>()(
           updateDate: now,
         };
         set(state => ({ tasks: [...state.tasks, newTask] }));
+        return newTask;
       },
 
       resortTask: props => {

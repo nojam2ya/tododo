@@ -1,0 +1,9 @@
+@layer components {
+    .focus-active {
+        @apply outline-none ring-2 ring-offset-2 dark:ring-offset-background-primary-dark ring-primary;
+    }
+
+    input:not(.none-focus), textarea, button, select, li, a, .focus {
+        @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:dark:ring-offset-background-primary-dark focus-visible:ring-primary;
+    }
+}

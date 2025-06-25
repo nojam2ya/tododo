@@ -1,16 +1,16 @@
 import {
-  OverlayPopupContext,
   OverlayPopupDispatchContext,
-} from '@shared/providers/OverlayPopupProvider/OverlayPopupContext.ts';
+  OverlayPopupProviderContext,
+} from '@shared/providers/OverlayPopupProvider/OverlayPopupProvider.context.ts';
 import type { ChildrenProps } from '@/types/global';
 import { type ComponentType, type LazyExoticComponent, useMemo, useState } from 'react';
-import OverlayPopup from '@components/OverlayPopup';
 import {
   OVERLAY_POPUP_REGISTRY,
   type OverlayPopupKey,
   type OverlayPopupPropsMap,
-} from '@shared/providers/OverlayPopupProvider/constants.ts';
+} from '@shared/providers/OverlayPopupProvider/OverlayPopupProvider.constants.ts';
 import { useEscKeydown } from '@shared/providers/OverlayPopupProvider/useKeypress.ts';
+import OverlayPopup from '@shared/components/OverlayPopup';
 
 interface PopupOverlayContent {
   Component: LazyExoticComponent<ComponentType<any>>;
@@ -18,7 +18,7 @@ interface PopupOverlayContent {
 }
 
 const OverlayPopupProvider: React.FC<ChildrenProps> = ({ children }) => {
-  const [size, setSize] = useState<{ $width: string; $height: string }>({ $width: '40%', $height: '50%' });
+  const [size, setSize] = useState<{ $width: string; $height: string }>({ $width: 'auto', $height: 'auto' });
   const [isOpen, setIsOpen] = useState(false);
   const [overlayPopupContent, setOverlayPopupContent] = useState<PopupOverlayContent>();
 
@@ -44,7 +44,7 @@ const OverlayPopupProvider: React.FC<ChildrenProps> = ({ children }) => {
   useEscKeydown(dispatch.close);
 
   return (
-    <OverlayPopupContext.Provider value={{ isOpen, size }}>
+    <OverlayPopupProviderContext.Provider value={{ isOpen, size }}>
       <OverlayPopupDispatchContext.Provider value={dispatch}>
         {children}
         {isOpen && overlayPopupContent && (
@@ -57,7 +57,7 @@ const OverlayPopupProvider: React.FC<ChildrenProps> = ({ children }) => {
           </OverlayPopup>
         )}
       </OverlayPopupDispatchContext.Provider>
-    </OverlayPopupContext.Provider>
+    </OverlayPopupProviderContext.Provider>
   );
 };
 

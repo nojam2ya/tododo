@@ -1,11 +1,15 @@
 @import 'pretendard/dist/web/static/pretendard.css';
 
 @import './customVariants.css';
+@import './utilities/flex.css';
+@import './utilities/priorities.css';
 @import './utilities/tags.css';
 @import './utilities/cards.css';
 @import './utilities/buttons.css';
 @import './utilities/inputs.css';
-@import './componnets.css';
+@import './components/events.css';
+@import './components/boxes.css';
+@import './components/daypicker.css';
 
 @tailwind base;
 @tailwind components;

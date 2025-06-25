@@ -1,0 +1,25 @@
+@layer components {
+    .today-styles {
+        @apply text-primary font-bold
+    }
+
+    .selected-styles {
+        @apply bg-primary rounded-md;
+
+        &.today-styles {
+            @apply text-white
+        }
+    }
+
+    .button-styles {
+        @apply w-7 h-7 bg-primary rounded-md;
+
+        svg {
+            @apply w-4 h-4 fill-white
+        }
+
+        button + & {
+            @apply ml-1
+        }
+    }
+}

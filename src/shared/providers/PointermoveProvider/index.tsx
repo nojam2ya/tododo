@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type { ChildrenProps } from '@/types/global';
-import { PointermoveContext } from '@shared/providers/PointermoveProvider/PointermoveContext.ts';
+import { PointermoveProviderContext } from '@shared/providers/PointermoveProvider/PointermoveProvider.context.ts';
 
 const PointermoveProvider: React.FC<ChildrenProps> = ({ children }) => {
   const [position, setPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
@@ -37,7 +37,7 @@ const PointermoveProvider: React.FC<ChildrenProps> = ({ children }) => {
       window.removeEventListener('pointermove', handlePointerMove);
     };
   }, []);
-  return <PointermoveContext.Provider value={{ position }}>{children}</PointermoveContext.Provider>;
+  return <PointermoveProviderContext.Provider value={{ position }}>{children}</PointermoveProviderContext.Provider>;
 };
 
 export default PointermoveProvider;

@@ -1,8 +1,8 @@
 import { useContext, useEffect, useRef } from 'react';
-import { PointermoveContext } from '@shared/providers/PointermoveProvider/PointermoveContext.ts';
+import { PointermoveProviderContext } from '@shared/providers/PointermoveProvider/PointermoveProvider.context.ts';
 
 export const useRectPosYStrWithContext = (ref: React.RefObject<HTMLElement | null>, isOver: boolean) => {
-  const context = useContext(PointermoveContext);
+  const context = useContext(PointermoveProviderContext);
   const posYRef = useRef<'top' | 'bottom'>('bottom');
 
   useEffect(() => {

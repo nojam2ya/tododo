@@ -1,11 +1,11 @@
 import TaskStatusList from '@features/dashboard/TaskStatusList.tsx';
 import { useTaskStore } from '@stores/taskStore.ts';
-import { TASK_STATUS } from '@shared/constants/taskConstants.tsx';
+import { TASK_STATUS, TASK_STATUS_TITLE_MAP } from '@shared/constants/taskConstants.tsx';
 import { closestCorners, DndContext, DragOverlay, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { useRef } from 'react';
 import { createBoundaryModifier } from '@shared/utils/utils.ts';
 import { useMainLayoutOutletContext } from '@layout/MainLayout/useMainLayoutOutletContext.ts';
-import TaskCard from '@components/TaskCard';
+import TaskCard from '@shared/components/TaskCard';
 import { useDragOverlayTask } from '@features/dashboard/useDragOverlayTask.ts';
 import { useDragEndInTaskList } from '@features/dashboard/useDragEndInTaskList.ts';
 
@@ -32,15 +32,19 @@ const DashboardPage = () => {
       onDragEnd={handleDragEnd}
     >
       <TaskStatusList ref={taskStatusListRef}>
-        <TaskStatusList.TaskStatusItem title={TASK_STATUS.TO_DO.TITLE} id={TASK_STATUS.TO_DO.KEY} tasks={todoTasks} />
         <TaskStatusList.TaskStatusItem
-          title={TASK_STATUS.IN_PROGRESS.TITLE}
-          id={TASK_STATUS.IN_PROGRESS.KEY}
+          title={TASK_STATUS_TITLE_MAP[TASK_STATUS.TODO]}
+          status={TASK_STATUS.TODO}
+          tasks={todoTasks}
+        />
+        <TaskStatusList.TaskStatusItem
+          title={TASK_STATUS_TITLE_MAP[TASK_STATUS.IN_PROGRESS]}
+          status={TASK_STATUS.IN_PROGRESS}
           tasks={inProgressTasks}
         />
         <TaskStatusList.TaskStatusItem
-          title={TASK_STATUS.COMPElTED.TITLE}
-          id={TASK_STATUS.COMPElTED.KEY}
+          title={TASK_STATUS_TITLE_MAP[TASK_STATUS.COMPLETED]}
+          status={TASK_STATUS.COMPLETED}
           tasks={completedTasks}
         />
       </TaskStatusList>

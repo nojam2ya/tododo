@@ -1,5 +1,5 @@
 import { type Modifier } from '@dnd-kit/core';
-import type { TaskPriorityKey } from '@shared/constants/taskConstants.tsx';
+import { TASK_PRIORITY, type TaskPriorityKey } from '@shared/constants/taskConstants.tsx';
 import clsx from 'clsx';
 
 export const createBoundaryModifier = (boundaryRef: React.RefObject<HTMLElement | null>): Modifier => {
@@ -46,30 +46,31 @@ export const getPriorityStyle = (
     border?: boolean;
     tag?: boolean;
   },
-) => {
+): string => {
   const { text, border, bg, tag } = targetStyle;
   switch (key) {
-    case 'high':
+    case TASK_PRIORITY.HIGH:
       return clsx({
         'high-text': text,
         'high-bg': bg,
         'high-border': border,
         'high-tag': tag,
       });
-    case 'medium':
+    case TASK_PRIORITY.MEDIUM:
       return clsx({
         'medium-text': text,
         'medium-bg': bg,
         'medium-border': border,
         'medium-tag': tag,
       });
-    case 'low':
+    case TASK_PRIORITY.LOW:
       return clsx({
         'low-text': text,
         'low-bg': bg,
         'low-border': border,
         'low-tag': tag,
       });
+    default:
+      return '';
   }
-  return '';
 };

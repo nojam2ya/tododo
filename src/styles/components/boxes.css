@@ -1,0 +1,6 @@
+@layer components {
+    .input-box {
+        @apply rounded-md block w-full border border-solid border-primary mt-1 p-2 text-sm text-left bg-white;
+        @apply dark:border-primary/20 dark:bg-background-primary-dark;
+    }
+}

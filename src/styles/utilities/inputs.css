@@ -1,13 +1,13 @@
 @layer utilities {
     .common-input-container {
-        @apply pt-2 pb-2;
+        @apply pt-3 pb-3;
 
         & {
             label {
-                @apply block font-semibold break-keep;
+                @apply block ;
             }
 
-            input, textarea, select {
+            input:not(.none-style), textarea, select {
                 @apply input-box
             }
 

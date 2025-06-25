@@ -1,6 +1,22 @@
 @layer utilities {
     .round-button {
-        @apply rounded-lg bg-primary/80 w-full p-2 text-white text-sm  transition-colors duration-300;
-        @apply hover:bg-primary-hover/80
+        @apply flex-center-center gap-2 rounded-lg bg-primary/80 p-2 text-white text-sm  transition-colors duration-300;
+        @apply hover:bg-primary-hover/80;
+
+        svg {
+            @apply w-4 h-4
+        }
     }
+
+    .line-button {
+        @apply flex-center-center gap-2 rounded-lg p-2 border border-solid border-primary text-sm  transition-colors duration-300;
+        @apply dark:border-primary/20 dark:bg-background-primary-dark;
+        @apply hover:bg-black/5 hover:dark:bg-white/5;
+
+        svg {
+            @apply w-4 h-4 text-gray-300
+        }
+    }
+
+
 }

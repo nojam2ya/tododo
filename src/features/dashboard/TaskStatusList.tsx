@@ -1,17 +1,17 @@
 import type { ChildrenProps, Task } from '@/types/global';
-import PlusButton from '@components/_buttons/PlusButton';
+import PlusButton from 'src/shared/components/_buttons/PlusButton';
 import { forwardRef, useContext } from 'react';
-import DraggableTaskCard from '@shared/components/DraggableTaskCard';
+import DraggableTaskCard from 'src/components/DraggableTaskCard';
 import clsx from 'clsx';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { useDroppable } from '@dnd-kit/core';
 import type { TaskStatusKey } from '@shared/constants/taskConstants.tsx';
 import { TASK_DROPPABLE_ID_PREFIX } from '@features/dashboard/constants.ts';
-import { OverlayPopupDispatchContext } from '@shared/providers/OverlayPopupProvider/OverlayPopupContext.ts';
+import { OverlayPopupDispatchContext } from '@shared/providers/OverlayPopupProvider/OverlayPopupProvider.context.ts';
 
 interface TaskStatusItemProps {
   title: string;
-  id: TaskStatusKey;
+  status: TaskStatusKey;
   tasks: Task[];
 }
 
@@ -40,15 +40,16 @@ const TaskStatusItemHeader: React.FC<TaskStatusItemHeaderProps> = ({ title, coun
     </div>
   );
 };
-const TaskStatusItem: React.FC<TaskStatusItemProps> = ({ title, tasks, id }) => {
+
+const TaskStatusItem: React.FC<TaskStatusItemProps> = ({ title, tasks, status }) => {
   const { open } = useContext(OverlayPopupDispatchContext);
   const handleOpen = () => {
-    open({ key: 'ADD_NEW_TASK_POPUP' });
+    open({ key: 'ADD_NEW_TASK_POPUP', props: { status } });
   };
 
   const { setNodeRef } = useDroppable({
-    id: `${TASK_DROPPABLE_ID_PREFIX}${id}`,
-    data: { id },
+    id: `${TASK_DROPPABLE_ID_PREFIX}${status}`,
+    data: { id: status },
   });
 
   return (
@@ -62,7 +63,7 @@ const TaskStatusItem: React.FC<TaskStatusItemProps> = ({ title, tasks, id }) => 
         <ul
           className={clsx('flex-grow flex flex-col gap-2 rounded-lg transition-colors duration-300 h-full')}
           ref={setNodeRef}
-          data-container-id={id}
+          data-container-id={status}
         >
           <SortableContext items={tasks.map(task => task.id)} strategy={verticalListSortingStrategy}>
             {tasks.map(task => (
