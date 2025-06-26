@@ -3,4 +3,5 @@ export interface InputProps {
   containerClassName?: string;
   labelClassName?: string;
   required?: boolean;
+  error?: string;
 }

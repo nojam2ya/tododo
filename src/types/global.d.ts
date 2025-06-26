@@ -18,6 +18,11 @@ export interface Tag {
   title: string;
 }
 
+export interface TempTag extends Omit<Tag, 'id'> {
+  id?: string;
+  title: string;
+}
+
 //////////////////////////////////////////////////
 
 export interface ChildrenProps {

@@ -5,6 +5,7 @@ import type { Tag } from '@/types/global';
 interface TagStore {
   tags: Tag[];
   createTag: (title: string) => Tag | undefined;
+  createTags: (titles: string[]) => Tag[] | undefined;
   getTagMap: () => Map<string, Tag>;
 }
 
@@ -30,6 +31,19 @@ export const useTagStore = create<TagStore>()(
           return { tags: [...state.tags, newTag] };
         });
         return newTag;
+      },
+      createTags: titles => {
+        const newTags: Tag[] = [];
+        set(state => {
+          for (const title of titles) {
+            const tag = state.createTag(title);
+            if (tag) {
+              newTags.push(tag);
+            }
+          }
+          return { tags: [...state.tags, ...newTags] };
+        });
+        return newTags?.length ? newTags : undefined;
       },
       getTagMap: () => new Map(get().tags.map(tag => [tag.id, tag])),
     }),

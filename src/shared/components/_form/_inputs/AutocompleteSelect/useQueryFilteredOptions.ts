@@ -2,22 +2,24 @@ import { useCallback, useMemo, useState } from 'react';
 
 export const useQueryFilteredOptions = <T extends Record<string, any>>({
   allDataList,
+  selectedDataList,
   labelName,
   valueName,
-  values,
+  // values,
 }: {
   allDataList: T[];
+  selectedDataList: T[];
   labelName: keyof T;
   valueName: keyof T;
-  values: string[];
+  // values: string[];
 }) => {
   const [query, setQuery] = useState(''); // query
 
   const options: T[] = useMemo(() => {
-    const options = allDataList.filter(data => !values.includes(data[valueName]));
+    const options = allDataList.filter(data => !selectedDataList.some(d => data[valueName] === d[valueName]));
     if (!query) return options;
     return options.filter(item => item[labelName].toLowerCase().includes(query.toLowerCase()));
-  }, [allDataList, labelName, valueName, values, query]);
+  }, [allDataList, labelName, valueName, selectedDataList, query]);
 
   const resetQuery = useCallback(() => setQuery(''), []);
 
