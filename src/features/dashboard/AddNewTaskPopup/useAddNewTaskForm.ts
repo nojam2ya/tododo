@@ -1,14 +1,17 @@
 import { useInitAndCreatedDataList } from '@shared/hooks/useInitAndCreatedDataList.ts';
-import type { Task, TempTag } from '@/types/global';
+import type { TempTag } from '@/types/global';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import dayjs from 'dayjs';
 import { DATE_FORMAT } from '@shared/constants/constants.tsx';
 import { useTaskStore } from '@stores/taskStore.ts';
 import { useTagStore } from '@stores/tagStore.ts';
+import { useContext } from 'react';
+import { OverlayPopupDispatchContext } from '@shared/providers/OverlayPopupProvider/OverlayPopupProvider.context.ts';
+import type { TaskStatusKey } from '@shared/constants/taskConstants.tsx';
+import type { AddFormTask } from '@features/dashboard/AddNewTaskPopup/AddNewTaskPopup.types.ts';
 
-type AddFormTask = Omit<Task, 'id' | 'tags'>;
-
-export const useAddNewTaskForm = (close: () => void) => {
+export const useAddNewTaskForm = (status: TaskStatusKey) => {
+  const { close } = useContext(OverlayPopupDispatchContext);
   const createTask = useTaskStore(state => state.createTask);
   const tags = useTagStore(state => state.tags);
   const createTag = useTagStore(state => state.createTag);
@@ -28,9 +31,9 @@ export const useAddNewTaskForm = (close: () => void) => {
 
   const {
     dataList: selectedTags,
-    addData,
-    removeData,
-    createData,
+    addData: addTag,
+    removeData: removeTag,
+    createData: createTempTag,
   } = useInitAndCreatedDataList({
     allDataList: tags as TempTag[],
     idName: 'id',
@@ -54,5 +57,14 @@ export const useAddNewTaskForm = (close: () => void) => {
     close(); // 닫기
   };
 
-  return {};
+  return {
+    handleSubmit: handleSubmit(onValid),
+    register,
+    control,
+    errors,
+    selectedTags,
+    addTag,
+    removeTag,
+    createTempTag,
+  };
 };
