@@ -16,13 +16,13 @@ interface ListSelectProps extends ChildrenProps, InputProps {
   buttonClassName?: string;
 }
 
-interface ListSelectOptionProps {
+interface OptionProps {
   value: string;
   title: string;
   className?: string;
 }
 
-const ListSelectOption: React.FC<ListSelectOptionProps> = React.memo(({ title, value, className }) => {
+const Option: React.FC<OptionProps> = React.memo(({ title, value, className }) => {
   return (
     <ListboxOption
       value={value}
@@ -88,8 +88,8 @@ const ListSelectComp: React.FC<ListSelectProps> = ({
   );
 };
 
-type ListField = typeof ListSelectComp & { ListSelectOption: typeof ListSelectOption };
+type ListField = typeof ListSelectComp & { Option: typeof Option };
 const ListField = ListSelectComp as ListField;
-ListField.ListSelectOption = ListSelectOption;
+ListField.Option = Option;
 
 export default ListField;

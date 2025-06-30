@@ -3,12 +3,12 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 
 type DisplayValuesTitleListProps = ChildrenProps;
 
-interface DisplayValuesTitleItemPros {
+interface ItemProps {
   text: string;
   onClickXButton: () => void;
 }
 
-const DisplayValuesTitleItem: React.FC<DisplayValuesTitleItemPros> = ({ onClickXButton, text }) => {
+const Item: React.FC<ItemProps> = ({ onClickXButton, text }) => {
   return (
     <li className={'tag flex-center-center gap-2'}>
       {text}
@@ -24,9 +24,9 @@ const DisplayValuesTitleListComp: React.FC<DisplayValuesTitleListProps> = ({ chi
 };
 
 type DisplayValuesTitleList = typeof DisplayValuesTitleListComp & {
-  DisplayValuesTitleItem: typeof DisplayValuesTitleItem;
+  Item: typeof Item;
 };
 const DisplayValuesTitleList = DisplayValuesTitleListComp as DisplayValuesTitleList;
-DisplayValuesTitleList.DisplayValuesTitleItem = DisplayValuesTitleItem;
+DisplayValuesTitleList.Item = Item;
 
 export default DisplayValuesTitleList;

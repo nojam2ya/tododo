@@ -24,7 +24,7 @@ const data = [
     content: 'New task assignments',
     date: '2025-05-22',
     completedDate: '2025-05-22',
-    Priority: 'high',
+    priority: 'high',
   },
 ];
 
@@ -34,11 +34,7 @@ const RecentCompleted = () => {
       <CardLargeTitle>완료작업</CardLargeTitle>
       <RecentCompletedList>
         {data.map(task => (
-          <RecentCompletedList.RecentCompletedItem
-            completedDate={task.completedDate}
-            title={task.title}
-            content={task.content}
-          />
+          <RecentCompletedList.Item completedDate={task.completedDate} title={task.title} content={task.content} />
         ))}
       </RecentCompletedList>
       <button className={'round-button w-full mt-4'}>더보기</button>

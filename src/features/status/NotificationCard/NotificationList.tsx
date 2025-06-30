@@ -3,13 +3,13 @@ import clsx from 'clsx';
 import dayjs from 'dayjs';
 import type { TaskPriorityKey } from '@shared/constants/taskConstants.tsx';
 
-interface NotificationItemProps {
+interface ItemProps {
   title: string;
   date: string;
   priority: TaskPriorityKey;
 }
 
-const NotificationItem: React.FC<NotificationItemProps> = ({ priority, date, title }) => {
+const Item: React.FC<ItemProps> = ({ priority, date, title }) => {
   const today = dayjs();
 
   /* tailwindcss classes */
@@ -39,8 +39,8 @@ const NotificationListComponent: React.FC<ChildrenProps> = ({ children }) => {
   return <ul className={base}>{children}</ul>;
 };
 
-type NotificationList = typeof NotificationListComponent & { NotificationItem: typeof NotificationItem };
+type NotificationList = typeof NotificationListComponent & { Item: typeof Item };
 const NotificationList = NotificationListComponent as NotificationList;
-NotificationList.NotificationItem = NotificationItem;
+NotificationList.Item = Item;
 
 export default NotificationList;

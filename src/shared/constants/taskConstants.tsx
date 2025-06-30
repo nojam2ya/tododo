@@ -40,6 +40,3 @@ export const TASK_Priority = {
     KEY: 'low',
   },
 } as const;
-
-// export type TaskPriorityKey = (typeof TASK_Priority)[keyof typeof TASK_Priority]['KEY'];
-

@@ -32,17 +32,17 @@ const DashboardPage = () => {
       onDragEnd={handleDragEnd}
     >
       <TaskStatusList ref={taskStatusListRef}>
-        <TaskStatusList.TaskStatusItem
+        <TaskStatusList.Item
           title={TASK_STATUS_TITLE_MAP[TASK_STATUS.TODO]}
           status={TASK_STATUS.TODO}
           tasks={todoTasks}
         />
-        <TaskStatusList.TaskStatusItem
+        <TaskStatusList.Item
           title={TASK_STATUS_TITLE_MAP[TASK_STATUS.IN_PROGRESS]}
           status={TASK_STATUS.IN_PROGRESS}
           tasks={inProgressTasks}
         />
-        <TaskStatusList.TaskStatusItem
+        <TaskStatusList.Item
           title={TASK_STATUS_TITLE_MAP[TASK_STATUS.COMPLETED]}
           status={TASK_STATUS.COMPLETED}
           tasks={completedTasks}

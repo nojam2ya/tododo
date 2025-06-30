@@ -2,11 +2,11 @@ import OverlayPopup from '@shared/components/OverlayPopup';
 import { type TaskStatusKey } from '@shared/constants/taskConstants.tsx';
 import AddNewTaskForm from '@features/dashboard/AddNewTaskPopup/AddNewTaskForm.tsx';
 
-export interface ListFieldProps {
+export interface AddNewTaskPopupProps {
   status: TaskStatusKey;
 }
 
-const AddNewTaskPopup: React.FC<ListFieldProps> = ({ status }) => {
+const AddNewTaskPopup: React.FC<AddNewTaskPopupProps> = ({ status }) => {
   return (
     <div className={'w-[28dvw]'}>
       <OverlayPopup.Title>새 작업 추가</OverlayPopup.Title>

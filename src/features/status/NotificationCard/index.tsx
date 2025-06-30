@@ -41,7 +41,7 @@ const NotificationCard = () => {
       </CardTitle>
       <NotificationList>
         {data.map(task => (
-          <NotificationList.NotificationItem
+          <NotificationList.Item
             key={task.id}
             title={task.title}
             date={task.date}

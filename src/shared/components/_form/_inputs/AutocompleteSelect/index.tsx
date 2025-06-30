@@ -82,7 +82,7 @@ const AutocompleteSelect = <T extends Record<string, any>>({
       midChildren={
         <DisplayValuesTitleList>
           {selectedDataList.map((data, i) => (
-            <DisplayValuesTitleList.DisplayValuesTitleItem
+            <DisplayValuesTitleList.Item
               key={data[valueName] ?? `new-${i}`}
               text={data[labelName]}
               onClickXButton={() => handleRemoveValue(data)}
@@ -92,11 +92,11 @@ const AutocompleteSelect = <T extends Record<string, any>>({
       }
     >
       {query && !options?.length && !isQueryNew && (
-        <ComboboxSelect.ComboboxSelectOption value={''} title={'옵션이 없습니다.'} disabled />
+        <ComboboxSelect.Option value={''} title={'옵션이 없습니다.'} disabled />
       )}
-      {isQueryNew && <ComboboxSelect.ComboboxSelectOption value={NEW_LABEL} title={`${query} 생성`} />}
+      {isQueryNew && <ComboboxSelect.Option value={NEW_LABEL} title={`${query} 생성`} />}
       {options.map(option => (
-        <ComboboxSelect.ComboboxSelectOption
+        <ComboboxSelect.Option
           key={option[valueName]}
           value={option[valueName]}
           title={option[labelName]}

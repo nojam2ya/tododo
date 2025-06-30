@@ -19,39 +19,37 @@ interface ComboboxSelectProps extends ChildrenProps, InputProps {
   midChildren?: React.ReactNode;
 }
 
-interface ComboboxSelectOptionProps {
+interface OptionProps {
   value: string;
   title: string;
   className?: string;
   disabled?: boolean;
 }
 
-const ComboboxSelectOption: React.FC<ComboboxSelectOptionProps> = React.memo(
-  ({ value, title, className, disabled }) => {
-    return (
-      <ComboboxOption
-        value={value}
-        disabled={disabled}
-        className={({ selected, focus }) =>
-          clsx(
-            'rounded-md p-1 text-sm relative',
-            selected && !className ? 'font-bold text-primary' : 'text-foreground dark:text-foreground-dark',
-            focus && 'bg-black/5 dark:bg-white/10',
-            disabled && 'opacity-50',
-            className,
-          )
-        }
-      >
-        {({ selected }) => (
-          <>
-            {selected && <CheckIcon className="w-3 h-3 absolute left-3 top-2" />}
-            {title}
-          </>
-        )}
-      </ComboboxOption>
-    );
-  },
-);
+const Option: React.FC<OptionProps> = React.memo(({ value, title, className, disabled }) => {
+  return (
+    <ComboboxOption
+      value={value}
+      disabled={disabled}
+      className={({ selected, focus }) =>
+        clsx(
+          'rounded-md p-1 text-sm relative',
+          selected && !className ? 'font-bold text-primary' : 'text-foreground dark:text-foreground-dark',
+          focus && 'bg-black/5 dark:bg-white/10',
+          disabled && 'opacity-50',
+          className,
+        )
+      }
+    >
+      {({ selected }) => (
+        <>
+          {selected && <CheckIcon className="w-3 h-3 absolute left-3 top-2" />}
+          {title}
+        </>
+      )}
+    </ComboboxOption>
+  );
+});
 
 const ComboboxSelectComp: React.FC<ComboboxSelectProps> = ({
   value,
@@ -118,8 +116,8 @@ const ComboboxSelectComp: React.FC<ComboboxSelectProps> = ({
     </div>
   );
 };
-type ComboboxSelect = typeof ComboboxSelectComp & { ComboboxSelectOption: typeof ComboboxSelectOption };
+type ComboboxSelect = typeof ComboboxSelectComp & { Option: typeof Option };
 const ComboboxSelect = ComboboxSelectComp as ComboboxSelect;
-ComboboxSelect.ComboboxSelectOption = ComboboxSelectOption;
+ComboboxSelect.Option = Option;
 
 export default ComboboxSelect;

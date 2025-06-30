@@ -84,7 +84,7 @@ const PriorityField: React.FC<AddNewTaskFormContollerFieldProps> = ({ control })
           buttonClassName={clsx(getPriorityStyle(field.value, { text: true }))}
         >
           {Object.values(TASK_PRIORITY).map(priority => (
-            <ListSelect.ListSelectOption
+            <ListSelect.Option
               key={priority}
               value={priority}
               title={TASK_PRIORITY_TITLE_MAP[priority]}
@@ -127,7 +127,7 @@ const StatusField: React.FC<AddNewTaskFormContollerFieldProps> = ({ control }) =
           onChange={value => field.onChange(value)}
         >
           {Object.values(TASK_STATUS).map(status => (
-            <ListSelect.ListSelectOption key={status} value={status} title={TASK_STATUS_TITLE_MAP[status]} />
+            <ListSelect.Option key={status} value={status} title={TASK_STATUS_TITLE_MAP[status]} />
           ))}
         </ListSelect>
       )}
