@@ -8,5 +8,4 @@
         @apply box w-full;
         @apply dark:border-primary/20 dark:bg-background-primary-dark;
     }
-
 }

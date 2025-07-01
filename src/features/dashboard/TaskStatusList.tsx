@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { forwardRef, useContext, useMemo, useState } from 'react';
+import { forwardRef, useContext } from 'react';
 import type { ChildrenProps, Task } from '@/types/global';
 import DraggableTaskCard from 'src/components/DraggableTaskCard';
 import clsx from 'clsx';
@@ -9,8 +9,9 @@ import type { TaskStatusKey } from '@shared/constants/taskConstants.tsx';
 import { TASK_DROPPABLE_ID_PREFIX } from '@features/dashboard/constants.ts';
 import { OverlayPopupDispatchContext } from '@shared/providers/OverlayPopupProvider/OverlayPopupProvider.context.ts';
 import PlusButton from '@shared/components/_buttons/PlusButton';
-import { useSortType } from '@shared/hooks/useSortType.ts';
-import type { SortOrder } from '@shared/constants/constants.tsx';
+import { useSortTasks } from '@features/dashboard/useSortTasks.ts';
+import SortButton from '@shared/components/_buttons/SortButton';
+import { XCircleIcon } from '@heroicons/react/24/solid';
 
 interface ItemProps {
   title: string;
@@ -55,68 +56,9 @@ const Item: React.FC<ItemProps> = ({ title, tasks, status }) => {
     data: { id: status },
   });
 
-  const [sortDateOrder, setSortDateOrder] = useState<number | null>(null);
-  const [sortPriorityOrder, setSortPriorityOrder] = useState<number | null>(null);
-
-  const { sortType: sortDateType, handleChangeSortType: changeSortDateType } = useSortType();
-  const { sortType: sortPriorityType, handleChangeSortType: changeSortPriorityType } = useSortType();
-
-  const sortTaskByDate = (tasks: Task[], sortType: SortOrder) => {
-    if (!sortType) return tasks;
-
-    if (sortDateType === 'desc') {
-      return tasks.sort((a, b) => {
-        if (a.date > b.date) return -1;
-        if (a.date < b.date) return 1;
-        return 0;
-      });
-    }
-
-    return tasks.sort();
-  };
-
-  const sortTaskByPriority = (tasks: Task[], sortType: SortOrder) => {
-    if (!sortType) return tasks;
-
-    if (sortType === 'desc') {
-      return tasks.sort((a, b) => {
-        const aNum = a.priority === 'high' ? 3 : a.priority === 'medium' ? 2 : 1;
-        const bNum = b.priority === 'high' ? 3 : b.priority === 'medium' ? 2 : 1;
-        if (aNum > bNum) return -1;
-        if (aNum < bNum) return 1;
-        return 0;
-      });
-    }
-
-    return tasks.sort((a, b) => {
-      const aNum = a.priority === 'high' ? 3 : a.priority === 'medium' ? 2 : 1;
-      const bNum = b.priority === 'high' ? 3 : b.priority === 'medium' ? 2 : 1;
-      if (aNum < bNum) return -1;
-      if (aNum > bNum) return 1;
-      return 0;
-    });
-  };
-
-  const displayTasks = useMemo(() => {
-    if (!sortDateType && !sortPriorityType) return tasks;
-
-    if (!sortPriorityType) return sortTaskByDate(tasks, sortDateType);
-
-    if (!sortDateType) return sortTaskByPriority(tasks, sortPriorityType);
-  }, [tasks, sortDateType, sortDateOrder, sortPriorityType, sortPriorityOrder]);
-
-  const handleSortDate = () => {
-    const nextType = changeSortDateType();
-
-    if (!nextType) {
-      setSortDateOrder(null);
-      if (sortPriorityOrder !== null && sortPriorityOrder > 1) setSortPriorityOrder(1);
-      return;
-    }
-
-    if (sortDateOrder !== null) {
-    }
-  };
+  const { updateSortOption, sortedTasks, sortOptions, resetSortOption } = useSortTasks(tasks);
+  const dateOption = sortOptions.find(t => t.key === 'date');
+  const priorityOption = sortOptions.find(t => t.key === 'priority');
 
   return (
     <>
@@ -132,8 +74,21 @@ const Item: React.FC<ItemProps> = ({ title, tasks, status }) => {
                 aria-label={`${title} 추가`}
                 onClick={handleOpen}
               />
-              <button onClick={() => changeSortDateType()}>날짜순(내림차순)</button>
-              <button onClick={() => changeSortPriorityType()}>중요도순(내림차순)</button>
+              <SortButton onClick={() => updateSortOption('date')} aria-label={'날짜 정렬'} order={dateOption?.order}>
+                날짜
+              </SortButton>
+              <SortButton
+                onClick={() => updateSortOption('priority')}
+                aria-label={'중요도 정렬'}
+                order={priorityOption?.order}
+              >
+                중요도
+              </SortButton>
+              {dateOption && priorityOption && (
+                <button onClick={resetSortOption} aria-label={'정렬 취소'}>
+                  <XCircleIcon className={'w-6 h-6 text-primary'} />
+                </button>
+              )}
             </>
           }
         />
@@ -143,7 +98,7 @@ const Item: React.FC<ItemProps> = ({ title, tasks, status }) => {
           data-container-id={status}
         >
           <SortableContext items={tasks.map(task => task.id)} strategy={verticalListSortingStrategy}>
-            {tasks.map(task => (
+            {sortedTasks.map(task => (
               <DraggableTaskCard key={task.id} task={task} draggableId={task.id} />
             ))}
           </SortableContext>

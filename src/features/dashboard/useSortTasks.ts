@@ -3,7 +3,7 @@ import type { SortOrder } from '@shared/constants/constants.tsx';
 import type { Task } from '@/types/global';
 
 interface SortOption {
-  key: keyof Task;
+  key: 'date' | 'priority';
   order: SortOrder;
 }
 
@@ -34,27 +34,34 @@ export const useSortTasks = (tasks: Task[]) => {
     });
   }, [sortOptions, tasks]);
 
-  const updateSortOption = (key: keyof Task) => {
+  const updateSortOption = (key: 'date' | 'priority') => {
     setSortOptions(prev => {
       const existing = prev.find(opt => opt.key === key);
       if (existing) {
+        // desc -> null
+        if (existing.order === 'asc') return prev.filter(p => p.key !== existing.key);
+
         // order 토글
         return prev.map(opt =>
           opt.key === key
             ? {
                 ...opt,
-                order: opt.order === null ? 'desc' : opt.order === 'desc' ? 'asc' : null,
+                order: opt.order === 'asc' ? 'desc' : 'asc',
               }
             : opt,
         );
       } else {
-        return [{ key, order: 'asc' }, ...prev];
+        return [{ key, order: 'desc' }, ...prev];
       }
     });
   };
 
+  const resetSortOption = () => setSortOptions([]);
+
   return {
     sortedTasks,
     updateSortOption,
+    sortOptions,
+    resetSortOption,
   };
 };
