@@ -1,4 +1,5 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
+import tailwindScrollbar from 'tailwind-scrollbar';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -31,5 +32,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [tailwindScrollbar({ nocompatible: true })],
 };

@@ -2,14 +2,14 @@ import TaskCard from '@shared/components/TaskCard';
 import type { Task } from '@/types/global';
 import { useSortable } from '@dnd-kit/sortable';
 import { useRectPosYStrWithContext } from '@shared/providers/PointermoveProvider/usePointermoveContext.ts';
-import { useMemo, useRef } from 'react';
+import { type FC, memo, useMemo, useRef } from 'react';
 
 interface DraggableTaskCardProps {
   draggableId: string;
   task: Task;
 }
 
-const DraggableTaskCard: React.FC<DraggableTaskCardProps> = ({ draggableId, task }) => {
+const DraggableTaskCard: FC<DraggableTaskCardProps> = memo(({ draggableId, task }) => {
   const { isDragging, isOver, setNodeRef, listeners, attributes } = useSortable({
     id: draggableId,
     data: task,
@@ -43,6 +43,6 @@ const DraggableTaskCard: React.FC<DraggableTaskCardProps> = ({ draggableId, task
       {...attributes}
     />
   );
-};
+});
 
 export default DraggableTaskCard;

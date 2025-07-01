@@ -7,6 +7,7 @@
 @import './utilities/cards.css';
 @import './utilities/buttons.css';
 @import './utilities/inputs.css';
+@import './utilities/scrolls.css';
 @import './components/events.css';
 @import './components/boxes.css';
 @import './components/daypicker.css';
@@ -14,4 +15,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@plugin 'tailwind-scrollbar';
 

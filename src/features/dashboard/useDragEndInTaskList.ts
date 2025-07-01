@@ -14,6 +14,8 @@ export const useDragEndInTaskList = (callback?: () => void) => {
     const { active, over } = event;
     if (!over) return;
 
+    if (active.id === over.id) return;
+
     if (over.id.toString().includes(TASK_DROPPABLE_ID_PREFIX)) {
       // list
       const status = over.data.current!.id;

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { forwardRef, useContext } from 'react';
+import { forwardRef, useContext, useEffect } from 'react';
 import type { ChildrenProps, Task } from '@/types/global';
 import DraggableTaskCard from 'src/components/DraggableTaskCard';
 import clsx from 'clsx';
@@ -26,7 +26,7 @@ interface TaskStatusItemHeaderProps {
   button: React.ReactNode;
 }
 
-const TaskStatusItemHeader: React.FC<TaskStatusItemHeaderProps> = ({ title, count, button, icon }) => {
+const TaskStatusItemHeader: React.FC<TaskStatusItemHeaderProps> = React.memo(({ title, count, button, icon }) => {
   return (
     <div className={'flex h-7 items-center gap-2'}>
       <h5 className={'flex gap-2 font-bold uppercase'}>
@@ -43,15 +43,15 @@ const TaskStatusItemHeader: React.FC<TaskStatusItemHeaderProps> = ({ title, coun
       {button}
     </div>
   );
-};
+});
 
-const Item: React.FC<ItemProps> = ({ title, tasks, status }) => {
+const Item: React.FC<ItemProps> = React.memo(({ title, tasks, status }) => {
   const { open } = useContext(OverlayPopupDispatchContext);
   const handleOpen = () => {
     open({ key: 'ADD_NEW_TASK_POPUP', props: { status } });
   };
 
-  const { setNodeRef } = useDroppable({
+  const { setNodeRef, active } = useDroppable({
     id: `${TASK_DROPPABLE_ID_PREFIX}${status}`,
     data: { id: status },
   });
@@ -59,6 +59,10 @@ const Item: React.FC<ItemProps> = ({ title, tasks, status }) => {
   const { updateSortOption, sortedTasks, sortOptions, resetSortOption } = useSortTasks(tasks);
   const dateOption = sortOptions.find(t => t.key === 'date');
   const priorityOption = sortOptions.find(t => t.key === 'priority');
+
+  useEffect(() => {
+    if (active && resetSortOption.length) resetSortOption();
+  }, [active, resetSortOption]);
 
   return (
     <>
@@ -93,7 +97,10 @@ const Item: React.FC<ItemProps> = ({ title, tasks, status }) => {
           }
         />
         <ul
-          className={clsx('flex-grow flex flex-col gap-2 rounded-lg transition-colors duration-300 h-full')}
+          className={clsx(
+            'flex-grow flex flex-col gap-2 rounded-lg transition-colors duration-300 h-full',
+            'scroll-container',
+          )}
           ref={setNodeRef}
           data-container-id={status}
         >
@@ -106,16 +113,18 @@ const Item: React.FC<ItemProps> = ({ title, tasks, status }) => {
       </li>
     </>
   );
-};
+});
 
-const TaskStatusListComponent = forwardRef<HTMLUListElement, ChildrenProps & React.HTMLAttributes<HTMLUListElement>>(
-  ({ children, ...props }, ref) => {
-    return (
-      <ul className={'flex justify-between gap-12 h-full relative'} {...props} ref={ref}>
-        {children}
-      </ul>
-    );
-  },
+const TaskStatusListComponent = React.memo(
+  forwardRef<HTMLUListElement, ChildrenProps & React.HTMLAttributes<HTMLUListElement>>(
+    ({ children, ...props }, ref) => {
+      return (
+        <ul className={'flex justify-between gap-12 h-full relative'} {...props} ref={ref}>
+          {children}
+        </ul>
+      );
+    },
+  ),
 );
 
 type TaskStatusListType = typeof TaskStatusListComponent & {

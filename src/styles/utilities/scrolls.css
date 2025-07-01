@@ -1,0 +1,6 @@
+@layer utilities {
+    .scroll-container {
+        @apply scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-slate-700 scrollbar-track-slate-300 h-32 overflow-y-auto;
+        @apply dark:scrollbar-track-black scrollbar-thumb-primary/80
+    }
+}

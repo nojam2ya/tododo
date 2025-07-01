@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import type { SortOrder } from '@shared/constants/constants.tsx';
 import type { Task } from '@/types/global';
 
@@ -56,7 +56,7 @@ export const useSortTasks = (tasks: Task[]) => {
     });
   };
 
-  const resetSortOption = () => setSortOptions([]);
+  const resetSortOption = useCallback(() => setSortOptions([]), []);
 
   return {
     sortedTasks,
