@@ -183,7 +183,8 @@ const EditTaskForm: React.FC<AddNewTaskFormProps> = ({ task, status }) => {
           취소
         </button>
         <button className={'round-button w-24'} type="submit">
-          <PencilSquareIcon />새 작업
+          <PencilSquareIcon />
+          {task ? '수정' : '생성'}
         </button>
       </div>
     </form>
