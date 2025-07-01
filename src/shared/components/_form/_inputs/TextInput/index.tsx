@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import type { InputProps } from '@shared/components/_form/_form.types.ts';
 import clsx from 'clsx';
-import Label from 'src/shared/components/_form/Label';
+import Label from '@shared/components/_form/Label';
 import ErrorMessage from '@shared/components/_form/ErrorMessage';
 
 type TextInputProps = InputProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'>;

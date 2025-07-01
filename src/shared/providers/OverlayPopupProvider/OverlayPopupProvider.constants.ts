@@ -1,11 +1,12 @@
 import { lazy } from 'react';
-import AddNewTaskPopup from '@features/dashboard/AddNewTaskPopup';
+import type { EditTaskPopupProps } from '@components/EditTaskPopup/EditTaskPopup.types.ts';
 
 export const OVERLAY_POPUP_REGISTRY = {
-  ADD_NEW_TASK_POPUP: lazy(() => import('src/features/dashboard/AddNewTaskPopup')),
+  EDIT_TASK_POPUP: lazy(() => import('@components/EditTaskPopup')),
 } as const;
 
 export type OverlayPopupKey = keyof typeof OVERLAY_POPUP_REGISTRY;
+
 export type OverlayPopupPropsMap = {
-  ADD_NEW_TASK_POPUP: AddNewTaskPopup;
+  EDIT_TASK_POPUP: EditTaskPopupProps;
 };

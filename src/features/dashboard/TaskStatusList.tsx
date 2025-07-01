@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { forwardRef, useContext, useEffect } from 'react';
 import type { ChildrenProps, Task } from '@/types/global';
-import DraggableTaskCard from 'src/components/DraggableTaskCard';
+import DraggableTaskCard from '@components/DraggableTaskCard';
 import clsx from 'clsx';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { useDroppable } from '@dnd-kit/core';
@@ -48,7 +48,7 @@ const TaskStatusItemHeader: React.FC<TaskStatusItemHeaderProps> = React.memo(({ 
 const Item: React.FC<ItemProps> = React.memo(({ title, tasks, status }) => {
   const { open } = useContext(OverlayPopupDispatchContext);
   const handleOpen = () => {
-    open({ key: 'ADD_NEW_TASK_POPUP', props: { status } });
+    open({ key: 'EDIT_TASK_POPUP', props: { status } });
   };
 
   const { setNodeRef, active } = useDroppable({

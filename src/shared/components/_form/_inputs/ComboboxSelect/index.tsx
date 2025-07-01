@@ -7,7 +7,7 @@ import { useId, useRef } from 'react';
 import { useRefElementSize } from '@shared/hooks/useRefElementSize.ts';
 import type { ChildrenProps } from '@/types/global';
 import type { InputProps } from '@shared/components/_form/_form.types.ts';
-import Label from 'src/shared/components/_form/Label';
+import Label from '@shared/components/_form/Label';
 
 interface ComboboxSelectProps extends ChildrenProps, InputProps {
   buttonClassName?: string;

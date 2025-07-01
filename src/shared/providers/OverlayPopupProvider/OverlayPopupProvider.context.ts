@@ -1,5 +1,8 @@
 import { createContext } from 'react';
-import type { OverlayPopupKey, OverlayPopupPropsMap } from '@shared/providers/OverlayPopupProvider/constants.ts';
+import type {
+  OverlayPopupKey,
+  OverlayPopupPropsMap,
+} from '@shared/providers/OverlayPopupProvider/OverlayPopupProvider.constants.ts';
 
 interface OverlayPopupDispatchContext {
   open: <K extends OverlayPopupKey>({ key, props }: { key: K; props?: OverlayPopupPropsMap[K] }) => void;

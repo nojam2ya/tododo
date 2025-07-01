@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 import { ko } from 'date-fns/locale';
 import { DATE_FORMAT } from '@shared/constants/constants.tsx';
 import { CalendarDaysIcon } from '@heroicons/react/24/outline';
-import Label from 'src/shared/components/_form/Label';
+import Label from '@shared/components/_form/Label';
 
 interface DatePickerInputProps extends InputProps {
   label?: string;

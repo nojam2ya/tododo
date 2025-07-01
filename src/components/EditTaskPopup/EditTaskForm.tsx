@@ -17,13 +17,14 @@ import dayjs from 'dayjs';
 import { DATE_FORMAT } from '@shared/constants/constants.tsx';
 import AutocompleteSelect from '@shared/components/_form/_inputs/AutocompleteSelect';
 import { PencilSquareIcon, XCircleIcon } from '@heroicons/react/24/solid';
-import { useAddNewTaskForm } from '@features/dashboard/AddNewTaskPopup/useAddNewTaskForm.ts';
+import { useEditTaskForm } from '@components/EditTaskPopup/useEditTaskForm.ts';
 import { useTagStore } from '@stores/tagStore.ts';
-import type { AddFormTask } from '@features/dashboard/AddNewTaskPopup/AddNewTaskPopup.types.ts';
-import type { TempTag } from '@/types/global';
+import type { AddFormTask } from '@components/EditTaskPopup/EditTaskPopup.types.ts';
+import type { Task, TempTag } from '@/types/global';
 
 interface AddNewTaskFormProps {
   status: TaskStatusKey;
+  task?: Task;
 }
 
 interface AddNewTaskFormFieldProps {
@@ -152,9 +153,11 @@ const TagsField: React.FC<TagsFieldProps> = ({ addTag, tags, removeTag, createTe
   );
 };
 
-const AddNewTaskForm: React.FC<AddNewTaskFormProps> = ({ status }) => {
-  const { handleSubmit, addTag, selectedTags, createTempTag, removeTag, control, register, errors } =
-    useAddNewTaskForm(status);
+const EditTaskForm: React.FC<AddNewTaskFormProps> = ({ task, status }) => {
+  const { handleSubmit, addTag, selectedTags, createTempTag, removeTag, control, register, errors } = useEditTaskForm(
+    status,
+    task,
+  );
   const tags = useTagStore(state => state.tags);
 
   return (
@@ -187,4 +190,4 @@ const AddNewTaskForm: React.FC<AddNewTaskFormProps> = ({ status }) => {
   );
 };
 
-export default AddNewTaskForm;
+export default EditTaskForm;

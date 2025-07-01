@@ -106,6 +106,8 @@ interface TaskStore {
   getTasksByStatus: (status: TaskStatusKey) => Task[];
   createTask: (task: Omit<Task, 'id' | 'createdDate' | 'updateDate'>) => Task;
   resortTask: (props: FromId | (FromId & ToId)) => void;
+  deleteTask: (task: Task) => void;
+  updateTask: (task: Task) => void;
 }
 
 // 스토어 생성
@@ -149,6 +151,15 @@ export const useTaskStore = create<TaskStore>()(
           const after = filteredTasks.slice(posYStr === 'top' ? index : index + 1);
           return { tasks: [...before, updatedTask, ...after] };
         });
+      },
+
+      deleteTask: task => {
+        set(state => ({ tasks: state.tasks.filter(t => t.id !== task.id) }));
+      },
+
+      updateTask: task => {
+        const now = dayjs().format(FULL_DATE_FORMAT);
+        set(state => ({ tasks: state.tasks.map(t => (t.id !== task.id ? t : { ...task, updateDate: now })) }));
       },
     }),
     {

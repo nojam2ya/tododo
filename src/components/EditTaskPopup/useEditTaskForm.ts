@@ -1,5 +1,5 @@
 import { useInitAndCreatedDataList } from '@shared/hooks/useInitAndCreatedDataList.ts';
-import type { TempTag } from '@/types/global';
+import type { Task, TempTag } from '@/types/global';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import dayjs from 'dayjs';
 import { DATE_FORMAT } from '@shared/constants/constants.tsx';
@@ -8,11 +8,12 @@ import { useTagStore } from '@stores/tagStore.ts';
 import { useContext } from 'react';
 import { OverlayPopupDispatchContext } from '@shared/providers/OverlayPopupProvider/OverlayPopupProvider.context.ts';
 import type { TaskStatusKey } from '@shared/constants/taskConstants.tsx';
-import type { AddFormTask } from '@features/dashboard/AddNewTaskPopup/AddNewTaskPopup.types.ts';
+import type { AddFormTask } from '@components/EditTaskPopup/EditTaskPopup.types.ts';
 
-export const useAddNewTaskForm = (status: TaskStatusKey) => {
+export const useEditTaskForm = (status: TaskStatusKey, task?: Task) => {
   const { close } = useContext(OverlayPopupDispatchContext);
   const createTask = useTaskStore(state => state.createTask);
+  const updateTask = useTaskStore(state => state.updateTask);
   const tags = useTagStore(state => state.tags);
   const createTag = useTagStore(state => state.createTag);
 
@@ -22,11 +23,13 @@ export const useAddNewTaskForm = (status: TaskStatusKey) => {
     handleSubmit,
     formState: { errors },
   } = useForm<AddFormTask>({
-    defaultValues: {
-      priority: 'low',
-      date: dayjs().format(DATE_FORMAT),
-      status,
-    },
+    defaultValues: task
+      ? task
+      : {
+          priority: 'low',
+          date: dayjs().format(DATE_FORMAT),
+          status,
+        },
   });
 
   const {
@@ -38,6 +41,7 @@ export const useAddNewTaskForm = (status: TaskStatusKey) => {
     allDataList: tags as TempTag[],
     idName: 'id',
     labelName: 'title',
+    initIds: task?.tags,
   });
 
   const onValid: SubmitHandler<AddFormTask> = data => {
@@ -53,7 +57,14 @@ export const useAddNewTaskForm = (status: TaskStatusKey) => {
       }
     }
 
-    createTask({ ...data, tags }); // 작업 생성
+    const nextTask = { ...data, tags };
+
+    if (!task) {
+      createTask(nextTask); // 작업 생성
+    } else {
+      updateTask({ id: task.id, ...nextTask });
+    }
+
     close(); // 닫기
   };
 
