@@ -1,7 +1,7 @@
-import type { ChildrenProps } from '@/types/global';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import type { TaskPriorityKey } from '@shared/constants/taskConstants.tsx';
+import type { ChildrenProps } from '@/types/component';
 
 interface ItemProps {
   title: string;

@@ -1,17 +1,25 @@
 import { useDarkMode } from '@stores/darkModeStore.ts';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/outline';
+import type { ButtonHTMLAttributes, FC } from 'react';
+import clsx from 'clsx';
 
-const ToggleDarkModeButton: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = props => {
+/**
+ * 다크모드 토글 버튼
+ * @param props
+ * @constructor
+ */
+const ToggleDarkModeButton: FC<ButtonHTMLAttributes<HTMLButtonElement>> = props => {
   const isDark = useDarkMode(state => state.isDark);
-  const icon = isDark ? <MoonIcon className={'w-6 h-6'} /> : <SunIcon className={'w-6 h-6'} />;
+  const iconBase = 'w-6 h-6';
   return (
     <button
-      className={
-        'flex-center-center fixed right-4 bottom-4 w-12 h-12 bg-background-secondary dark:bg-background-secondary-dark rounded-full'
-      }
+      className={clsx(
+        'flex-center-center fixed right-4 bottom-4 w-12 h-12 bg-background-secondary rounded-full',
+        'dark:bg-background-secondary-dark',
+      )}
       {...props}
     >
-      {icon}
+      {isDark ? <MoonIcon className={iconBase} /> : <SunIcon className={iconBase} />}
     </button>
   );
 };

@@ -3,20 +3,20 @@ import clsx from 'clsx';
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
 import { CheckIcon } from '@heroicons/react/24/solid';
 import * as React from 'react';
-import { useId, useRef } from 'react';
+import { memo, useId, useRef } from 'react';
 import { useRefElementSize } from '@shared/hooks/useRefElementSize.ts';
-import type { ChildrenProps } from '@/types/global';
 import type { InputProps } from '@shared/components/_form/_form.types.ts';
 import Label from '@shared/components/_form/Label';
+import type { ChildrenProps } from '@/types/component';
 
 interface ComboboxSelectProps extends ChildrenProps, InputProps {
+  value: string; // 콤보 박스 값
+  onChangeCombobox: (value: string) => void; // 콤보박스 변경 이벤트 핸들러 함수
+  onCloseCombobox?: () => void; // 콤보박스 닫기 이벤트 핸들러 함수
+  onChangeComboboxInput: (e: React.ChangeEvent<HTMLInputElement>) => void; // input 변경 이벤트 핸들러 함수
+  displayValue?: (item: any) => string; // input 값
+  midChildren?: React.ReactNode; // 중간 children
   buttonClassName?: string;
-  value: string;
-  onChangeCombobox: (value: string) => void;
-  onCloseCombobox?: () => void;
-  onChangeComboboxInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  displayValue?: (item: any) => string;
-  midChildren?: React.ReactNode;
 }
 
 interface OptionProps {
@@ -26,7 +26,15 @@ interface OptionProps {
   disabled?: boolean;
 }
 
-const Option: React.FC<OptionProps> = React.memo(({ value, title, className, disabled }) => {
+/**
+ * 콤보 박스(셀렉트) 옵션 컴포넌트
+ * @param value
+ * @param title
+ * @param className
+ * @param disabled
+ * @constructor
+ */
+const Option: React.FC<OptionProps> = ({ value, title, className, disabled }) => {
   return (
     <ComboboxOption
       value={value}
@@ -49,8 +57,24 @@ const Option: React.FC<OptionProps> = React.memo(({ value, title, className, dis
       )}
     </ComboboxOption>
   );
-});
+};
 
+/**
+ * 콤보 박스(셀렉트) 컨테이너 컴포넌트
+ * @param value - 콤보 박스 값
+ * @param label - 라벨
+ * @param displayValue - input 값
+ * @param onChangeCombobox - 콤보박스 변경 이벤트 핸들러 함수
+ * @param onCloseCombobox - 콤보박스 닫기 이벤트 핸들러 함수
+ * @param onChangeComboboxInput - input 변경 이벤트 핸들러 함수
+ * @param midChildren - 중간 children
+ * @param children - 하단 children
+ * @param required - 필수값
+ * @param buttonClassName
+ * @param containerClassName
+ * @param labelClassName
+ * @constructor
+ */
 const ComboboxSelectComp: React.FC<ComboboxSelectProps> = ({
   value,
   buttonClassName,
@@ -66,16 +90,21 @@ const ComboboxSelectComp: React.FC<ComboboxSelectProps> = ({
   required,
 }) => {
   const id = useId();
-  const inputRef = useRef<HTMLInputElement>(null);
+
+  /* 전체 wrapper dom ref */
   const wrapperRef = useRef<HTMLDivElement>(null);
+  /* 콤보 박스 인풋(텍스트) dom ref */
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  /* 전체 wrapper dom 사이즈 */
   const { width } = useRefElementSize(wrapperRef);
 
   const handleFocus = () => {
-    wrapperRef.current?.classList.add('focus-active');
+    wrapperRef.current?.classList.add('focus-active'); // focus 스타일 클래스 추가
   };
 
   const handleBlur = () => {
-    wrapperRef.current?.classList.remove('focus-active');
+    wrapperRef.current?.classList.remove('focus-active'); // focus 스타일 클래스 제거
   };
 
   return (
@@ -93,7 +122,9 @@ const ComboboxSelectComp: React.FC<ComboboxSelectProps> = ({
             ref={inputRef}
             displayValue={displayValue}
             className={clsx(
-              'none-style none-focus focus-visible:outline-none text-sm text-left bg-white dark:border-primary/20 dark:bg-background-primary-dark w-full justify-between items-center',
+              'none-style text-sm text-left bg-white w-full justify-between items-center',
+              'none-focus focus-visible:outline-none',
+              'dark:border-primary/20 dark:bg-background-primary-dark',
               buttonClassName,
             )}
             aria-label={label}
@@ -116,8 +147,9 @@ const ComboboxSelectComp: React.FC<ComboboxSelectProps> = ({
     </div>
   );
 };
+
 type ComboboxSelect = typeof ComboboxSelectComp & { Option: typeof Option };
 const ComboboxSelect = ComboboxSelectComp as ComboboxSelect;
-ComboboxSelect.Option = Option;
+ComboboxSelect.Option = memo(Option);
 
 export default ComboboxSelect;

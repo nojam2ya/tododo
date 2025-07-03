@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import type { ChildrenProps } from '@/types/global';
 import { PointermoveProviderContext } from '@shared/providers/PointermoveProvider/PointermoveProvider.context.ts';
+import type { ChildrenProps } from '@/types/component';
 
 const PointermoveProvider: React.FC<ChildrenProps> = ({ children }) => {
   const [position, setPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });

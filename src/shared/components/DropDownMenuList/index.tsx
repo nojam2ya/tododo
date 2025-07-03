@@ -1,8 +1,8 @@
-import type { HTMLAttributes } from 'react';
 import * as React from 'react';
-import type { ChildrenProps } from '@/types/global';
+import { type HTMLAttributes, memo } from 'react';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import clsx from 'clsx';
+import type { ChildrenProps } from '@/types/component';
 
 interface DropDownMenuItem extends HTMLAttributes<any> {
   as?: React.ElementType;
@@ -32,10 +32,18 @@ type ButtonRenderProp = (props: {
 }) => React.ReactElement;
 
 interface DropDownMenuListProps extends ChildrenProps {
-  buttonChildren: React.ReactElement | ButtonRenderProp;
+  buttonChildren: React.ReactElement | ButtonRenderProp; // 렌더 함수 O
   anchor?: AnchorProps;
 }
 
+/**
+ * 드롭 다운 메뉴 아이템 컴포넌트
+ * @param as
+ * @param children
+ * @param className
+ * @param props
+ * @constructor
+ */
 const Item: React.FC<DropDownMenuItem> = ({ as, children, className, ...props }) => {
   return (
     <MenuItem
@@ -52,6 +60,13 @@ const Item: React.FC<DropDownMenuItem> = ({ as, children, className, ...props })
   );
 };
 
+/**
+ * 드롭 다운 메뉴 컨테이너 컴포넌트
+ * @param anchor - 드롭다운 창 위치
+ * @param buttonChildren
+ * @param children
+ * @constructor
+ */
 const DropDownMenuListComp: React.FC<DropDownMenuListProps> = ({ anchor, buttonChildren, children }) => {
   return (
     <Menu>
@@ -67,6 +82,6 @@ const DropDownMenuListComp: React.FC<DropDownMenuListProps> = ({ anchor, buttonC
 
 type DropDownMenuList = typeof DropDownMenuListComp & { Item: typeof Item };
 const DropDownMenuList = DropDownMenuListComp as DropDownMenuList;
-DropDownMenuList.Item = Item;
+DropDownMenuList.Item = memo(Item);
 
 export default DropDownMenuList;

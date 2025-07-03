@@ -3,10 +3,14 @@ import type { SortOrder } from '@shared/constants/constants.tsx';
 import type { Task } from '@/types/global';
 
 interface SortOption {
-  key: 'date' | 'priority';
-  order: SortOrder;
+  key: 'date' | 'priority'; // 작업 날짜 | 중요도
+  order: SortOrder; // 정렬 순서
 }
 
+/**
+ * 작업 정렬 훅
+ * @param tasks
+ */
 export const useSortTasks = (tasks: Task[]) => {
   const [sortOptions, setSortOptions] = useState<SortOption[]>([]);
 
@@ -38,10 +42,9 @@ export const useSortTasks = (tasks: Task[]) => {
     setSortOptions(prev => {
       const existing = prev.find(opt => opt.key === key);
       if (existing) {
-        // desc -> null
+        // (null | undefined) -> desc, desc -> asc, asc -> null
         if (existing.order === 'asc') return prev.filter(p => p.key !== existing.key);
 
-        // order 토글
         return prev.map(opt =>
           opt.key === key
             ? {

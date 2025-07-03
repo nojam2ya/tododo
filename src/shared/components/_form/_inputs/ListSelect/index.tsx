@@ -1,6 +1,4 @@
-import * as React from 'react';
-import { useId, useRef } from 'react';
-import type { ChildrenProps } from '@/types/global';
+import { type FC, memo, useId, useRef } from 'react';
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react';
 import clsx from 'clsx';
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
@@ -8,11 +6,12 @@ import { CheckIcon } from '@heroicons/react/24/solid';
 import { useRefElementSize } from '@shared/hooks/useRefElementSize.ts';
 import type { InputProps } from '@shared/components/_form/_form.types.ts';
 import Label from '@shared/components/_form/Label';
+import type { ChildrenProps } from '@/types/component';
 
 interface ListSelectProps extends ChildrenProps, InputProps {
-  currentTitle: string;
-  value: string;
-  onChange: (value: string) => void;
+  currentTitle: string; // 현재 라벨 타이틀
+  value: string; // 값
+  onChange: (value: string) => void; // 변경 핸들러 함수
   buttonClassName?: string;
 }
 
@@ -22,7 +21,14 @@ interface OptionProps {
   className?: string;
 }
 
-const Option: React.FC<OptionProps> = React.memo(({ title, value, className }) => {
+/**
+ * 리스트 셀렉트 옵션 컴포넌트
+ * @param title
+ * @param value
+ * @param className
+ * @constructor
+ */
+const Option: FC<OptionProps> = ({ title, value, className }) => {
   return (
     <ListboxOption
       value={value}
@@ -43,9 +49,22 @@ const Option: React.FC<OptionProps> = React.memo(({ title, value, className }) =
       )}
     </ListboxOption>
   );
-});
+};
 
-const ListSelectComp: React.FC<ListSelectProps> = ({
+/**
+ * 리스트 셀렉트 컨테이너 컴포넌트
+ * @param label - 라벨
+ * @param currentTitle - 현재 라벨 타이틀
+ * @param value - 값
+ * @param onChange - 변경 핸들러 함수
+ * @param required - 필수값
+ * @param children
+ * @param labelClassName
+ * @param containerClassName
+ * @param buttonClassName
+ * @constructor
+ */
+const ListSelectComp: FC<ListSelectProps> = ({
   label,
   currentTitle,
   value,
@@ -90,6 +109,6 @@ const ListSelectComp: React.FC<ListSelectProps> = ({
 
 type ListField = typeof ListSelectComp & { Option: typeof Option };
 const ListField = ListSelectComp as ListField;
-ListField.Option = Option;
+ListField.Option = memo(Option);
 
 export default ListField;

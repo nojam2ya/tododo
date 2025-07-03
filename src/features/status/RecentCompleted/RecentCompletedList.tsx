@@ -1,6 +1,6 @@
-import type { ChildrenProps } from '@/types/global';
 import dayjs from 'dayjs';
 import { KO_DATE_FORMAT } from '@shared/constants/constants.tsx';
+import type { ChildrenProps } from '@/types/component';
 
 interface ItemProps {
   title: string;

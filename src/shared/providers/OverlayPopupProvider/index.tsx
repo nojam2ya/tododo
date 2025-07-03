@@ -2,7 +2,6 @@ import {
   OverlayPopupDispatchContext,
   OverlayPopupProviderContext,
 } from '@shared/providers/OverlayPopupProvider/OverlayPopupProvider.context.ts';
-import type { ChildrenProps } from '@/types/global';
 import { type ComponentType, type LazyExoticComponent, useMemo, useState } from 'react';
 import {
   OVERLAY_POPUP_REGISTRY,
@@ -11,6 +10,7 @@ import {
 } from '@shared/providers/OverlayPopupProvider/OverlayPopupProvider.constants.ts';
 import { useEscKeydown } from '@shared/providers/OverlayPopupProvider/useKeypress.ts';
 import OverlayPopup from '@shared/components/OverlayPopup';
+import type { ChildrenProps } from '@/types/component';
 
 interface PopupOverlayContent {
   Component: LazyExoticComponent<ComponentType<any>>;

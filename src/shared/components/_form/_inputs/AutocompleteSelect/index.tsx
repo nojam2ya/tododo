@@ -6,15 +6,30 @@ import { NEW_LABEL } from '@shared/components/_form/_inputs/AutocompleteSelect/A
 
 interface AutocompleteSelectProps<T extends Record<string, any>> extends InputProps {
   allDataList: T[]; // 전체 데이터
-  selectedDataList: T[]; // 선택 데이터
-  addData: (data: T) => void; // 실 데이터 추가
+  addData: (data: T) => void; // 데이터 추가
+  selectedDataList: T[]; // 선택된 데이터
   removeData: (key: keyof T, value: string) => void; // 데이터 삭제
-  createData: (label: string) => void; // 새 데이터 생성
+  createData: (label: string) => void; // 새 데이터 생성  (기존 추가 X, 새로 생성 O)
   labelName: keyof T; // 라벨 prop name
-  valueName: keyof T; // 아이디(값) prop name
+  valueName: keyof T | string; // 아이디(값) prop name
   optionClassName?: string;
 }
 
+/**
+ * 자동완성 텍스트 인풋 + 셀렉트 박스 컴포넌트
+ * @param allDataList - 전체 데이터
+ * @param addData - 데이터 추가
+ * @param removeData - 데이터 삭제
+ * @param createData - 새 데이터 생성 (기존 추가 X, 새로 생성 O)
+ * @param selectedDataList - 선택된 데이터
+ * @param valueName - 아이디(값) prop name
+ * @param labelName - 라벨 prop name
+ * @param label
+ * @param labelClassName
+ * @param containerClassName
+ * @param optionClassName
+ * @constructor
+ */
 const AutocompleteSelect = <T extends Record<string, any>>({
   allDataList,
   addData,
@@ -35,10 +50,11 @@ const AutocompleteSelect = <T extends Record<string, any>>({
     selectedDataList,
   });
 
+  // 데이터 생성 조건
   const isQueryNew =
     query &&
     allDataList.every(data => data[labelName] !== query) &&
-    allDataList.every(data => data[labelName] !== query);
+    selectedDataList.every(data => data[labelName] !== query);
 
   const handleAddValue = (value: string) => {
     // 새 데이터 생성
@@ -50,7 +66,7 @@ const AutocompleteSelect = <T extends Record<string, any>>({
     // 기존 데이터 선택
     const hasValue = selectedDataList.some(data => data[valueName] === value);
 
-    if (hasValue) return;
+    if (hasValue) return; // 이미 선택된 데이터에 생성되어 있으면 return
 
     const data = allDataList.find(data => data[valueName] === value);
 

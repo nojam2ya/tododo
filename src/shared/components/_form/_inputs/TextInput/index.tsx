@@ -6,6 +6,16 @@ import ErrorMessage from '@shared/components/_form/ErrorMessage';
 
 type TextInputProps = InputProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'>;
 
+/**
+ * input 컴포넌트
+ * @param label
+ * @param labelClassName
+ * @param containerClassName
+ * @param required
+ * @param error
+ * @param inputAttrs
+ * @constructor
+ */
 const TextInput: React.FC<TextInputProps> = ({
   label,
   labelClassName,

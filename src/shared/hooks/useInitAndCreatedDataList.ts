@@ -8,7 +8,7 @@ export const useInitAndCreatedDataList = <T extends Record<string, any>>({
 }: {
   allDataList: T[];
   initIds?: T[keyof T][] | string[];
-  idName: keyof T;
+  idName: keyof T | string;
   labelName: keyof T;
 }) => {
   const [dataList, setDataList] = useState<T[]>([]);

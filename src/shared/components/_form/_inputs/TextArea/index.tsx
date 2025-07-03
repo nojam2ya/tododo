@@ -7,6 +7,17 @@ import ErrorMessage from '@shared/components/_form/ErrorMessage';
 
 type TextAreaProps = InputProps & React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
+/**
+ * textarea 컴포넌트
+ * @param labelClassName
+ * @param label
+ * @param containerClassName
+ * @param className
+ * @param required
+ * @param error
+ * @param textAreaAttrs
+ * @constructor
+ */
 const TextArea: React.FC<TextAreaProps> = ({
   labelClassName,
   label,

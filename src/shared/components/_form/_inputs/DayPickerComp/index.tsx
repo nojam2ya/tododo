@@ -11,11 +11,21 @@ import { CalendarDaysIcon } from '@heroicons/react/24/outline';
 import Label from '@shared/components/_form/Label';
 
 interface DatePickerInputProps extends InputProps {
-  label?: string;
-  selectedDate?: Date;
-  onChange: (date: Date) => void;
+  label?: string; // 라벨
+  selectedDate?: Date; // 선택된 날짜
+  onChange: (date: Date) => void; // 날짜 변경
 }
 
+/**
+ * 날짜 선택 컴포넌트
+ * @param label - 라벨
+ * @param selectedDate - 선택된 날짜
+ * @param onChange - 날짜 변경
+ * @param containerClassName
+ * @param labelClassName
+ * @param required
+ * @constructor
+ */
 const DayPickerComp: React.FC<DatePickerInputProps> = ({
   label,
   selectedDate,
@@ -24,11 +34,18 @@ const DayPickerComp: React.FC<DatePickerInputProps> = ({
   labelClassName,
   required,
 }) => {
-  const buttonRef = useRef<HTMLButtonElement>(null);
   const id = useId();
+
+  /* 날짜 선택 wrapper dom ref */
   const ref = useRef<HTMLDivElement>(null);
+  /* 팝업 열기 버튼 dom ref */
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  /* 날짜 선택 wrapper dom ref 사이즈 */
   const { width } = useRefElementSize(ref);
+
   const [inputValue, setInputValue] = useState(dayjs(selectedDate).format(DATE_FORMAT));
+
   const handleChangeDate = (date: Date) => {
     setInputValue(dayjs(date).format(DATE_FORMAT));
     onChange(date);

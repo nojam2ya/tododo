@@ -25,18 +25,3 @@ export const TASK_PRIORITY_TITLE_MAP = {
 } as const;
 
 export type TaskPriorityKey = (typeof TASK_PRIORITY)[keyof typeof TASK_PRIORITY];
-
-export const TASK_Priority = {
-  HIGH: {
-    TITLE: 'high',
-    KEY: 'high',
-  },
-  MEDIUM: {
-    TITLE: 'medium',
-    KEY: 'medium',
-  },
-  LOW: {
-    TITLE: 'low',
-    KEY: 'low',
-  },
-} as const;

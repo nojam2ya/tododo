@@ -12,7 +12,7 @@ const TaskItemHeader: React.FC<TaskItemHeaderProps> = ({ title, onClickDelete, o
   return (
     <div className={'flex-between-center'}>
       <h6 className={'font-semibold'}>{title}</h6>
-      <DropDownMenuList buttonChildren={({ open }) => <MoreButton type="button" aria-label="더보기" active={open} />}>
+      <DropDownMenuList buttonChildren={({ open }) => <MoreButton as="div" aria-label="더보기" active={open} />}>
         <DropDownMenuList.Item as="button" onClick={onClickEdit}>
           <PencilSquareIcon className={'w-4 h-4'} />
           수정

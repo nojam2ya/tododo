@@ -1,9 +1,9 @@
-import type { ChildrenProps } from '@/types/global';
 import { Suspense, useContext } from 'react';
 import { OverlayPopupDispatchContext } from '@shared/providers/OverlayPopupProvider/OverlayPopupProvider.context.ts';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { GridLoader } from 'react-spinners';
 import clsx from 'clsx';
+import type { ChildrenProps } from '@/types/component';
 
 interface OverlayPopupContentProps extends ChildrenProps {
   $width?: string;
