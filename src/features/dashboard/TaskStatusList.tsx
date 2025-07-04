@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { forwardRef, memo, useContext, useEffect } from 'react';
+import { type FC, forwardRef, memo, useContext, useEffect } from 'react';
 import DraggableTaskCard from '@components/DraggableTaskCard';
 import clsx from 'clsx';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
@@ -12,6 +12,7 @@ import SortButton from '@shared/components/_buttons/SortButton';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 import type { ChildrenProps } from '@/types/component';
 import type { TaskStatusItemProps } from '@features/dashboard/dashboard.types.ts';
+import type { TaskStatusKey } from '@shared/constants/taskConstants.tsx';
 
 interface ItemHeaderProps extends ChildrenProps {
   icon?: React.ReactNode; // 아이콘
@@ -40,6 +41,29 @@ const ItemHeader: React.FC<ItemHeaderProps> = React.memo(({ title, count, childr
     </div>
   );
 });
+
+const EmptyTask: FC<{ status: TaskStatusKey }> = ({ status }) => {
+  const { open } = useContext(OverlayPopupDispatchContext);
+
+  // 작업 추가/삭제 팝업 열기
+  const handleOpen = () => {
+    open({ key: 'EDIT_TASK_POPUP', props: { status } });
+  };
+
+  return (
+    <button
+      className={clsx(
+        'border border-solid border-gray-300 h-full rounded-md flex-center-center text-gray-300 text-center text-sm transition-colors duration-300',
+        'dark:border-white/20 dark:text-white/20',
+        'hover:bg-background-secondary hover:dark:bg-background-secondary-dark',
+      )}
+      onClick={handleOpen}
+    >
+      작업이 없습니다.
+      <br /> 작업을 추가해주세요.
+    </button>
+  );
+};
 
 /**
  * 작업 상태 아이템 컴포넌트
@@ -91,20 +115,24 @@ const Item: React.FC<TaskStatusItemProps> = React.memo(({ title, tasks, status }
           </button>
         )}
       </ItemHeader>
-      <ul
-        className={clsx(
-          'flex-grow flex flex-col gap-2 rounded-lg transition-colors duration-300 h-full',
-          'scroll-container',
-        )}
-        ref={setNodeRef}
-        data-container-id={status}
-      >
-        <SortableContext items={tasks.map(task => task.id)} strategy={verticalListSortingStrategy}>
-          {sortedTasks.map(task => (
-            <DraggableTaskCard key={task.id} task={task} draggableId={task.id} />
-          ))}
-        </SortableContext>
-      </ul>
+      {!sortedTasks.length ? (
+        <EmptyTask status={status} />
+      ) : (
+        <ul
+          className={clsx(
+            'flex-grow flex flex-col gap-2 rounded-lg transition-colors duration-300 h-full',
+            'scroll-container',
+          )}
+          ref={setNodeRef}
+          data-container-id={status}
+        >
+          <SortableContext items={tasks.map(task => task.id)} strategy={verticalListSortingStrategy}>
+            {sortedTasks.map(task => (
+              <DraggableTaskCard key={task.id} task={task} draggableId={task.id} />
+            ))}
+          </SortableContext>
+        </ul>
+      )}
     </li>
   );
 });
