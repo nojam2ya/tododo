@@ -2,21 +2,28 @@ import type { Tag } from '@/types/global';
 import { create } from 'zustand/react';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import dayjs from 'dayjs';
-import { DATE_FORMAT } from '@shared/constants/constants.tsx';
+import { DATE_FORMAT, FULL_DATE_FORMAT, isTest } from '@shared/constants/constants.tsx';
 import { v4 as uuidV4 } from 'uuid';
 
 interface TagStore {
   tags: Tag[];
-  createTag: (title: string) => Tag | undefined;
   getTagMap: () => Map<string, Tag>;
+  createTag: (title: string) => Tag | undefined;
+  updateTag: (tag: Tag) => void;
+  deleteTag: (tag: Tag) => void;
 }
 
-const isTest = process.env.NODE_ENV === 'test';
-
+/* 태그 스토어 */
 export const useTagStore = create<TagStore>()(
   persist(
     (set, get) => ({
+      /* 태그 리스트 */
       tags: [],
+
+      /* 태그 맵 get */
+      getTagMap: () => new Map(get().tags.map(tag => [tag.id, tag])),
+
+      /* 태그 생성 */
       createTag: title => {
         let newTag;
         set(state => {
@@ -27,7 +34,27 @@ export const useTagStore = create<TagStore>()(
         });
         return newTag;
       },
-      getTagMap: () => new Map(get().tags.map(tag => [tag.id, tag])),
+
+      /* 태그 수정 */
+      updateTag: tag => {
+        const now = dayjs().format(FULL_DATE_FORMAT);
+        set(state => ({
+          tags: state.tags.map(t =>
+            t.id !== tag.id
+              ? t
+              : {
+                  ...t,
+                  ...tag,
+                  updateDate: now,
+                },
+          ),
+        }));
+      },
+
+      /* 태그 삭제 */
+      deleteTag: tag => {
+        set(state => ({ tags: state.tags.filter(t => t.id !== tag.id) }));
+      },
     }),
     {
       name: 'tag',

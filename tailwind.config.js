@@ -19,6 +19,7 @@ export default {
       colors: {
         primary: '#5a5ad3',
         'primary-hover': '#4e4eb2',
+        'primary-light': '#7575f3',
         secondary: '#bcf121',
         background: {
           primary: '#f5f5f5',

@@ -36,7 +36,7 @@ const TaskCard = forwardRef<HTMLLIElement, TaskCardProps>(({ task, className, ..
   return (
     <li className={clsx('card-base card-hover flex flex-col gap-2', className)} {...props} ref={ref}>
       <TaskItemHeader title={task.title} onClickEdit={handleEdit} onClickDelete={handleDelete} />
-      <p className={'opacity-70 text-sm font-light'}>{task.content}</p>
+      <pre className={'font-sans opacity-70 text-sm font-light'}>{task.content}</pre>
       <ul className={'flex gap-1'}>
         {task.tags.map(tagId => (
           <li className={'tag'} key={tagId}>

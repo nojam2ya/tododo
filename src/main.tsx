@@ -7,6 +7,9 @@ import '@styles/reset.css';
 import '@styles/global.css';
 import 'dayjs/locale/ko';
 import * as dayjs from 'dayjs';
+import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 dayjs.locale('ko');
 

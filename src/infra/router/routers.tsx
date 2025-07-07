@@ -2,13 +2,15 @@ import type { CustomRouteObject, NonIndexRouteObject } from 'react-router';
 import DashboardPage from '@features/dashboard';
 import MainLayout from '@layout/MainLayout';
 import StatusPage from '@features/status';
-import { ChartBarIcon, RectangleGroupIcon } from '@heroicons/react/24/outline';
+import { ChartBarIcon, Cog8ToothIcon, RectangleGroupIcon } from '@heroicons/react/24/outline';
 import {
   ChartBarIcon as ChartBarSolidIcon,
+  Cog8ToothIcon as Cog8ToothSolidIcon,
   RectangleGroupIcon as RectangleGroupSolidIcon,
 } from '@heroicons/react/24/solid';
 import PointermoveProvider from '@shared/providers/PointermoveProvider';
 import OverlayPopupProvider from '@shared/providers/OverlayPopupProvider';
+import SettingPage from '@features/setting';
 
 export interface Menu extends NonIndexRouteObject {
   id: string;
@@ -41,6 +43,18 @@ export const menus: Menu[] = [
       icon: {
         default: <ChartBarIcon className={'w-6 h-6'} />,
         active: <ChartBarSolidIcon className={'w-6 h-6'} />,
+      },
+    },
+  },
+  {
+    id: 'setting',
+    path: 'setting',
+    element: <SettingPage />,
+    meta: {
+      title: '설정',
+      icon: {
+        default: <Cog8ToothIcon className={'w-6 h-6'} />,
+        active: <Cog8ToothSolidIcon className={'w-6 h-6'} />,
       },
     },
   },
