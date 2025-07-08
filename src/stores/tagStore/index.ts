@@ -12,6 +12,7 @@ interface TagStore {
   createTag: (title: string) => Tag | undefined;
   updateTag: (tag: Tag) => void;
   deleteTag: (tag: Tag) => void;
+  deleteUnusedTags: () => void;
 }
 
 /* 태그 스토어 */
@@ -56,6 +57,18 @@ export const useTagStore = create<TagStore>()(
       deleteTag: tag => {
         taskStore.getState().deleteTag(tag);
         set(state => ({ tags: state.tags.filter(t => t.id !== tag.id) }));
+      },
+
+      deleteUnusedTags: () => {
+        const tasks = taskStore.getState().tasks;
+        if (!tasks?.length) {
+          set(() => ({ tags: [] }));
+          return;
+        }
+
+        const tagIdSet = new Set<string>();
+        tasks.forEach(task => task.tags.forEach(tagId => tagIdSet.add(tagId)));
+        set(state => ({ tags: state.tags.filter(tag => tagIdSet.has(tag.id)) }));
       },
     }),
     {
