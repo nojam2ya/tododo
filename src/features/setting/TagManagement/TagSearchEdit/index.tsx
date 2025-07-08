@@ -4,12 +4,9 @@ import { useTagStore } from '@stores/tagStore';
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { useQueryFilter } from '@shared/hooks/useQueryFilter.ts';
 import { useTagSearchEditHandlers } from '@features/setting/TagManagement/TagSearchEdit/useTagSearchEditHandlers.ts';
+import type { ClassNameProps } from '@/types/component';
 
-interface TagSearchEditProps {
-  className?: string;
-}
-
-const TagSearchEdit: FC<TagSearchEditProps> = ({ className }) => {
+const TagSearchEdit: FC<ClassNameProps> = ({ className }) => {
   const tags = useTagStore(state => state.tags);
 
   const {

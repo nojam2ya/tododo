@@ -6,7 +6,7 @@ import { CheckIcon } from '@heroicons/react/24/solid';
 import { useRefElementSize } from '@shared/hooks/useRefElementSize.ts';
 import type { InputProps } from '@shared/components/_form/_form.types.ts';
 import Label from '@shared/components/_form/Label';
-import type { ChildrenProps } from '@/types/component';
+import type { ChildrenProps, ClassNameProps } from '@/types/component';
 
 interface ListSelectProps extends ChildrenProps, InputProps {
   currentTitle: string; // 현재 라벨 타이틀
@@ -15,10 +15,9 @@ interface ListSelectProps extends ChildrenProps, InputProps {
   buttonClassName?: string;
 }
 
-interface OptionProps {
+interface OptionProps extends ClassNameProps {
   value: string;
   title: string;
-  className?: string;
 }
 
 /**

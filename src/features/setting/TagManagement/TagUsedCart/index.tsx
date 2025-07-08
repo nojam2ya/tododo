@@ -3,10 +3,7 @@ import SingleAxisBarChart from '@shared/components/_charts/SingleAxisBarChart';
 import { type FC, useState } from 'react';
 import { useTagUsedChartData } from '@features/setting/TagManagement/TagUsedCart/useTagUsedChartData.ts';
 import clsx from 'clsx';
-
-interface TagUsedCartProps {
-  className?: string;
-}
+import type { ClassNameProps } from '@/types/component';
 
 const ToggleSortModeButton: FC<{
   onClick: () => void;
@@ -27,7 +24,7 @@ const ToggleSortModeButton: FC<{
   );
 };
 
-const TagUsedCart: FC<TagUsedCartProps> = ({ className }) => {
+const TagUsedCart: FC<ClassNameProps> = ({ className }) => {
   const [sortMode, setSortMode] = useState<'least' | 'top'>('top');
 
   const toggleSortMode = () => setSortMode(prev => (prev === 'least' ? 'top' : 'least'));

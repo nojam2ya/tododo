@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { type RefObject, useEffect, useState } from 'react';
 
 export const useEqualTabWidth = (ref: RefObject<HTMLDivElement | null>, tabCount: number) => {
   const [tabWidth, setTabWidth] = useState(0);

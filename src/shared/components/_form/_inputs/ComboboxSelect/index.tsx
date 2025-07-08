@@ -7,7 +7,7 @@ import { memo, useId, useRef } from 'react';
 import { useRefElementSize } from '@shared/hooks/useRefElementSize.ts';
 import type { InputProps } from '@shared/components/_form/_form.types.ts';
 import Label from '@shared/components/_form/Label';
-import type { ChildrenProps } from '@/types/component';
+import type { ChildrenProps, ClassNameProps } from '@/types/component';
 
 interface ComboboxSelectProps extends ChildrenProps, InputProps {
   value: string; // 콤보 박스 값
@@ -19,10 +19,9 @@ interface ComboboxSelectProps extends ChildrenProps, InputProps {
   buttonClassName?: string;
 }
 
-interface OptionProps {
+interface OptionProps extends ClassNameProps {
   value: string;
   title: string;
-  className?: string;
   disabled?: boolean;
 }
 

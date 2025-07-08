@@ -52,12 +52,8 @@ const TabListComp: FC<ChildrenProps> = ({ children }) => {
 };
 
 const TabPanelsItem: FC<ChildrenProps> = ({ children }) => {
-  return <TabPanel>{children}</TabPanel>;
-};
-
-const TabPanelsComp: FC<ClassNameProps & ChildrenProps> = ({ className, children }) => {
   return (
-    <TabPanels className={clsx('scroll-container flex-grow', className)}>
+    <TabPanel>
       <Suspense
         fallback={
           <>
@@ -68,23 +64,29 @@ const TabPanelsComp: FC<ClassNameProps & ChildrenProps> = ({ className, children
       >
         {children}
       </Suspense>
-    </TabPanels>
+    </TabPanel>
   );
+};
+
+const TabPanelsComp: FC<ClassNameProps & ChildrenProps> = ({ className, children }) => {
+  return <TabPanels className={clsx('scroll-container flex-grow', className)}>{children}</TabPanels>;
 };
 
 const TabWrapComp: FC<ClassNameProps & ChildrenProps> = ({ className, children }) => {
   return <TabGroup className={clsx('flex flex-col gap-2', className)}>{children}</TabGroup>;
 };
 
+type PanelsType = typeof TabPanelsComp & { Item: typeof TabPanelsItem };
+type TabListType = typeof TabListComp & { Item: typeof TabListItem };
 type Tabs = typeof TabWrapComp & {
-  TabList: typeof TabListComp & { Item: typeof TabListItem };
-  Panels: typeof TabPanelsComp & { Item: typeof TabPanelsItem };
+  TabList: TabListType;
+  Panels: PanelsType;
 };
 
 const Tabs = TabWrapComp as Tabs;
-Tabs.TabList = TabListComp;
+Tabs.TabList = TabListComp as TabListType;
 Tabs.TabList.Item = TabListItem;
-Tabs.Panels = TabPanelsComp;
+Tabs.Panels = TabPanelsComp as PanelsType;
 Tabs.Panels.Item = TabPanelsItem;
 
 export default Tabs;

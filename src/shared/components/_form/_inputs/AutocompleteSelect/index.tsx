@@ -12,7 +12,7 @@ interface AutocompleteSelectProps<T extends Record<string, any>> extends InputPr
   createData: (label: string) => void; // 새 데이터 생성  (기존 추가 X, 새로 생성 O)
   labelName: keyof T; // 라벨 prop name
   valueName: keyof T | string; // 아이디(값) prop name
-  optionClassName?: ['className'];
+  optionClassName?: string;
 }
 
 /**
