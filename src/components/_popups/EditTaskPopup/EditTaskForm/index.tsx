@@ -1,15 +1,17 @@
-import { PencilSquareIcon, XCircleIcon } from '@heroicons/react/24/solid';
-import { useEditTaskForm } from '@components/EditTaskPopup/useEditTaskForm.ts';
-import type { FC } from 'react';
-import TitleField from '@components/EditTaskPopup/EditTaskForm/TitleField.tsx';
-import ContentField from '@components/EditTaskPopup/EditTaskForm/ContentField.tsx';
-import PriorityField from '@components/EditTaskPopup/EditTaskForm/PriorityField.tsx';
-import DateField from '@components/EditTaskPopup/EditTaskForm/DateField.tsx';
-import StatusField from '@components/EditTaskPopup/EditTaskForm/StatusField.tsx';
-import TagsField from '@components/EditTaskPopup/EditTaskForm/TagsField.tsx';
+import { useEditTaskForm } from '@components/_popups/EditTaskPopup/useEditTaskForm.ts';
+import { type FC, useContext } from 'react';
+import TitleField from '@components/_popups/EditTaskPopup/EditTaskForm/TitleField.tsx';
+import ContentField from '@components/_popups/EditTaskPopup/EditTaskForm/ContentField.tsx';
+import PriorityField from '@components/_popups/EditTaskPopup/EditTaskForm/PriorityField.tsx';
+import DateField from '@components/_popups/EditTaskPopup/EditTaskForm/DateField.tsx';
+import StatusField from '@components/_popups/EditTaskPopup/EditTaskForm/StatusField.tsx';
+import TagsField from '@components/_popups/EditTaskPopup/EditTaskForm/TagsField.tsx';
 import type { TaskStatusKey } from '@shared/constants/taskConstants.tsx';
 import type { Task } from '@/types/global';
 import { useTagStore } from '@stores/tagStore';
+import { OverlayPopupDispatchContext } from '@shared/providers/OverlayPopupProvider/OverlayPopupProvider.context.ts';
+import CancelButton from '@shared/components/_buttons/CancelButton';
+import EditButton from '@shared/components/_buttons/EditButton';
 
 export interface EditTaskFormProps {
   status: TaskStatusKey; // 작업
@@ -23,6 +25,7 @@ export interface EditTaskFormProps {
  * @constructor
  */
 const EditTaskForm: FC<EditTaskFormProps> = ({ task, status }) => {
+  const { close } = useContext(OverlayPopupDispatchContext);
   const { handleSubmit, addTag, selectedTags, createTempTag, removeTag, control, register, errors } = useEditTaskForm(
     status,
     task,
@@ -47,14 +50,8 @@ const EditTaskForm: FC<EditTaskFormProps> = ({ task, status }) => {
       />
 
       <div className={'mt-6 flex gap-2 justify-end'}>
-        <button className={'line-button w-24'} type="button" onClick={close}>
-          <XCircleIcon />
-          취소
-        </button>
-        <button className={'round-button w-24'} type="submit">
-          <PencilSquareIcon />
-          {task ? '수정' : '생성'}
-        </button>
+        <CancelButton type="button" onClick={close} />
+        <EditButton type="submit">{task ? '수정' : '생성'}</EditButton>
       </div>
     </form>
   );

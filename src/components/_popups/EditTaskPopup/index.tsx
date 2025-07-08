@@ -1,10 +1,10 @@
 import OverlayPopup from '@shared/components/OverlayPopup';
-import type { EditTaskPopupProps } from '@components/EditTaskPopup/EditTaskPopup.types.ts';
+import type { EditTaskPopupProps } from '@components/_popups/EditTaskPopup/EditTaskPopup.types.ts';
 import type { FC } from 'react';
-import EditTaskForm from '@components/EditTaskPopup/EditTaskForm';
+import EditTaskForm from '@components/_popups/EditTaskPopup/EditTaskForm';
 
 /**
- * 작업 추가/수정 팝업
+ * 작업 추가/수정 팝업 컴포넌트
  * @param task - 작업
  * @param status - 작업 상태
  * @constructor

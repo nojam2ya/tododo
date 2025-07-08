@@ -1,4 +1,4 @@
-import type { Task } from '@/types/global';
+import type { Tag, Task } from '@/types/global';
 import type { TaskStatusKey } from '@shared/constants/taskConstants.tsx';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
@@ -15,6 +15,7 @@ interface TaskStore {
   resortTask: (props: FromId | (FromId & ToId)) => void; // 작업 재정렬 함수
   deleteTask: (task: Task) => void; // 작업 삭제 함수
   updateTask: (task: Task) => void; // 작업 수정 함수
+  deleteTag: (tag: Tag) => void;
 }
 
 /* 작업 스토어 */
@@ -56,6 +57,15 @@ export const useTaskStore = create<TaskStore>()(
       updateTask: task => {
         const now = dayjs().format(FULL_DATE_FORMAT);
         set(state => ({ tasks: state.tasks.map(t => (t.id !== task.id ? t : { ...t, ...task, updateDate: now })) }));
+      },
+
+      /* 태그 삭제에 따른 작업 수정 */
+      deleteTag: tag => {
+        set(state => ({
+          tasks: state.tasks.map(task =>
+            task.tags.includes(tag.id) ? { ...task, tags: task.tags.filter(id => id !== tag.id) } : task,
+          ),
+        }));
       },
     }),
     {

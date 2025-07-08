@@ -1,6 +1,6 @@
 import type { Task } from '@/types/global';
 import type { Control, FieldErrors, UseFormRegister } from 'react-hook-form';
-import type { NewTask } from '@components/EditTaskPopup/EditTaskPopup.types.ts';
+import type { NewTask } from '@components/_popups/EditTaskPopup/EditTaskPopup.types.ts';
 
 /* 작업 추가/수정 필드 컴포넌트 프롭 - register 사용 */
 export interface EditTaskFormFieldProps {

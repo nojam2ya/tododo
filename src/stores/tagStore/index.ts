@@ -4,6 +4,7 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 import dayjs from 'dayjs';
 import { DATE_FORMAT, FULL_DATE_FORMAT, isTest } from '@shared/constants/constants.tsx';
 import { v4 as uuidV4 } from 'uuid';
+import { useTaskStore as taskStore } from '@stores/taskStore';
 
 interface TagStore {
   tags: Tag[];
@@ -53,6 +54,7 @@ export const useTagStore = create<TagStore>()(
 
       /* 태그 삭제 */
       deleteTag: tag => {
+        taskStore.getState().deleteTag(tag);
         set(state => ({ tags: state.tags.filter(t => t.id !== tag.id) }));
       },
     }),

@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import type { EditTaskFormControlFieldProps } from '@components/EditTaskPopup/EditTaskForm/EditTaskForm.types.ts';
+import type { EditTaskFormControlFieldProps } from '@components/_popups/EditTaskPopup/EditTaskForm/EditTaskForm.types.ts';
 import { Controller } from 'react-hook-form';
 import ListSelect from '@shared/components/_form/_inputs/ListSelect';
 import { TASK_STATUS, TASK_STATUS_TITLE_MAP } from '@shared/constants/taskConstants.tsx';

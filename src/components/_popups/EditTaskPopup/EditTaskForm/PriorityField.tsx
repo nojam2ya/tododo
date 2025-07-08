@@ -1,11 +1,11 @@
 import type { FC } from 'react';
-import type { EditTaskFormControlFieldProps } from '@components/EditTaskPopup/EditTaskForm/EditTaskForm.types.ts';
+import type { EditTaskFormControlFieldProps } from '@components/_popups/EditTaskPopup/EditTaskForm/EditTaskForm.types.ts';
 import { Controller, type ControllerRenderProps } from 'react-hook-form';
 import ListSelect from '@shared/components/_form/_inputs/ListSelect';
 import { TASK_PRIORITY, TASK_PRIORITY_TITLE_MAP, type TaskPriorityKey } from '@shared/constants/taskConstants.tsx';
 import clsx from 'clsx';
 import { getPriorityStyle } from '@shared/utils/utils.ts';
-import type { NewTask } from '@components/EditTaskPopup/EditTaskPopup.types.ts';
+import type { NewTask } from '@components/_popups/EditTaskPopup/EditTaskPopup.types.ts';
 import type { Task } from '@/types/global';
 
 /**

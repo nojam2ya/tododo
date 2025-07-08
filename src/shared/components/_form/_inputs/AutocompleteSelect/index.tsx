@@ -3,7 +3,6 @@ import DisplayValuesTitleList from '@shared/components/_form/_inputs/Autocomplet
 import ComboboxSelect from '@shared/components/_form/_inputs/ComboboxSelect';
 import { useQueryFilteredOptions } from '@shared/components/_form/_inputs/AutocompleteSelect/useQueryFilteredOptions.ts';
 import { NEW_LABEL } from '@shared/components/_form/_inputs/AutocompleteSelect/AutocompleteSelect.constatns.ts';
-import type { PropsOf } from '@headlessui/react/dist/types';
 
 interface AutocompleteSelectProps<T extends Record<string, any>> extends InputProps {
   allDataList: T[]; // 전체 데이터
@@ -13,7 +12,7 @@ interface AutocompleteSelectProps<T extends Record<string, any>> extends InputPr
   createData: (label: string) => void; // 새 데이터 생성  (기존 추가 X, 새로 생성 O)
   labelName: keyof T; // 라벨 prop name
   valueName: keyof T | string; // 아이디(값) prop name
-  optionClassName?: PropsOf<HTMLElement> & ['className'];
+  optionClassName?: ['className'];
 }
 
 /**

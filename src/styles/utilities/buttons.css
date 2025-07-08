@@ -8,6 +8,17 @@
         }
     }
 
+    .round-button-line {
+        @apply flex-center-center gap-2 p-2 text-gray-400 text-sm transition-colors duration-300;
+        @apply rounded-lg border border-solid border-gray-200;
+        @apply dark:border-gray-700 dark:text-gray-600;
+        @apply hover:bg-gray-100 dark:hover:bg-gray-950;
+
+        svg {
+            @apply w-4 h-4
+        }
+    }
+
     .line-button {
         @apply flex-center-center gap-2 rounded-lg p-2 border border-solid border-primary text-sm  transition-colors duration-300;
         @apply dark:border-primary/20 dark:bg-background-primary-dark;
@@ -37,5 +48,5 @@
             @apply w-3 h-3 text-white
         }
     }
- 
+
 }

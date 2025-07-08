@@ -6,7 +6,7 @@ import { DATE_FORMAT } from '@shared/constants/constants.tsx';
 import { useContext } from 'react';
 import { OverlayPopupDispatchContext } from '@shared/providers/OverlayPopupProvider/OverlayPopupProvider.context.ts';
 import type { TaskStatusKey } from '@shared/constants/taskConstants.tsx';
-import type { NewTask } from '@components/EditTaskPopup/EditTaskPopup.types.ts';
+import type { NewTask } from '@components/_popups/EditTaskPopup/EditTaskPopup.types.ts';
 import { useTaskStore } from '@stores/taskStore';
 import { useTagStore } from '@stores/tagStore';
 

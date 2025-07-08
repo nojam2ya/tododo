@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import type { EditTaskFormFieldProps } from '@components/EditTaskPopup/EditTaskForm/EditTaskForm.types.ts';
+import type { EditTaskFormFieldProps } from '@components/_popups/EditTaskPopup/EditTaskForm/EditTaskForm.types.ts';
 import TextArea from '@shared/components/_form/_inputs/TextArea';
 
 /**
@@ -13,9 +13,9 @@ const ContentField: FC<EditTaskFormFieldProps> = ({ register, errors }) => {
     <TextArea
       label={'작업 내용'}
       placeholder={'작업 내용을 입력 하세요.'}
-      required
+      // required
       {...register('content', {
-        required: '작업 내용을 입력하세요.',
+        // required: '작업 내용을 입력하세요.',
       })}
       error={errors.content?.message}
     />

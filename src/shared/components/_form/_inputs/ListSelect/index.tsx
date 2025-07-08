@@ -7,19 +7,18 @@ import { useRefElementSize } from '@shared/hooks/useRefElementSize.ts';
 import type { InputProps } from '@shared/components/_form/_form.types.ts';
 import Label from '@shared/components/_form/Label';
 import type { ChildrenProps } from '@/types/component';
-import type { PropsOf } from '@headlessui/react/dist/types';
 
 interface ListSelectProps extends ChildrenProps, InputProps {
   currentTitle: string; // 현재 라벨 타이틀
   value: string; // 값
   onChange: (value: string) => void; // 변경 핸들러 함수
-  buttonClassName?: PropsOf<HTMLButtonElement> & ['className'];
+  buttonClassName?: string;
 }
 
 interface OptionProps {
   value: string;
   title: string;
-  className?: PropsOf<HTMLElement> & ['className'];
+  className?: string;
 }
 
 /**

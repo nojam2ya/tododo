@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react';
-import { useEditTaskForm } from '@/components/EditTaskPopup/useEditTaskForm';
+import { useEditTaskForm } from '@components/_popups/EditTaskPopup/useEditTaskForm.ts';
 import { describe, expect, it, vi } from 'vitest';
 import React from 'react';
-import { OverlayPopupDispatchContext } from '@shared/providers/OverlayPopupProvider/OverlayPopupProvider.context';
+import { OverlayPopupDispatchContext } from '@shared/providers/OverlayPopupProvider/OverlayPopupProvider.context.ts';
 
 vi.mock('@stores/taskStore', () => ({
   useTaskStore: () => ({

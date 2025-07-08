@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import type { EditTaskFormFieldProps } from '@components/EditTaskPopup/EditTaskForm/EditTaskForm.types.ts';
+import type { EditTaskFormFieldProps } from '@components/_popups/EditTaskPopup/EditTaskForm/EditTaskForm.types.ts';
 import TextInput from '@shared/components/_form/_inputs/TextInput';
 
 /**

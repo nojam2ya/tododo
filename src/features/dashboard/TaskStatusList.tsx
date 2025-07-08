@@ -109,7 +109,7 @@ const Item: React.FC<TaskStatusItemProps> = React.memo(({ title, tasks, status }
         >
           중요도
         </SortButton>
-        {dateOption && priorityOption && (
+        {(dateOption || priorityOption) && (
           <button onClick={resetSortOption} aria-label={'정렬 취소'}>
             <XCircleIcon className={'w-6 h-6 text-primary'} />
           </button>
